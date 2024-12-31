@@ -1,7 +1,6 @@
 package Days.Day1;
 
 import Interfaces.InputManipulatable;
-import Interfaces.SizeGettable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,14 +8,14 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class StringFormatter implements InputManipulatable<Integer[][]> {
+public class InputFormatter implements InputManipulatable<Integer[][]> {
 
     private List<String> input;
     private int[] leftNumbers;
     private int[] rightNumbers;
     private int size;
 
-    public StringFormatter() throws IOException {
+    public InputFormatter() throws IOException {
         this.input = readFile();
         leftNumbers = new int[input.size()];
         rightNumbers = new int[input.size()];
@@ -61,7 +60,7 @@ public class StringFormatter implements InputManipulatable<Integer[][]> {
 
     public static void main(String[] args) {
         try {
-            StringFormatter testFormat = new StringFormatter();
+            InputFormatter testFormat = new InputFormatter();
 
             Integer[][] input = testFormat.getFormattedInput();
             System.out.println("Formattierter Input:");

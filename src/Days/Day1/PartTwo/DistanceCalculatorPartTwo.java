@@ -1,6 +1,6 @@
 package Days.Day1.PartTwo;
 
-import Days.Day1.StringFormatter;
+import Days.Day1.InputFormatter;
 import Interfaces.InputManipulatable;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class DistanceCalculatorPartTwo {
     private int distance;
 
     public DistanceCalculatorPartTwo() throws IOException {
-        this.manipulatedInput = new StringFormatter();
+        this.manipulatedInput = new InputFormatter();
         this.distance = calculateDistance(this.manipulatedInput.getFormattedInput());
     }
 

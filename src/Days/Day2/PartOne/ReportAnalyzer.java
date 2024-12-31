@@ -1,6 +1,6 @@
 package Days.Day2.PartOne;
 
-import Days.Day2.StringFormatter;
+import Days.Day2.InputFormatter;
 import Interfaces.InputManipulatable;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ public class ReportAnalyzer {
     private int numberOfSafeReports;
 
     public ReportAnalyzer() throws IOException {
-        this.manipulatedInput = new StringFormatter();
+        this.manipulatedInput = new InputFormatter();
         this.numberOfSafeReports = validateReports(this.manipulatedInput.getFormattedInput());
     }
 
