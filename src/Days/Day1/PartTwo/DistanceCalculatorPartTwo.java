@@ -1,5 +1,6 @@
-package Days.Day1;
+package Days.Day1.PartTwo;
 
+import Days.Day1.StringFormatter;
 import Interfaces.InputManipulatable;
 
 import java.io.IOException;
