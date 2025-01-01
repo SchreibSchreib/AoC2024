@@ -4,10 +4,7 @@ import Days.Day3.InputFormatter;
 import Interfaces.InputManipulatable;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,21 +26,39 @@ class ExpressionExtractor {
     private Map<Integer, Integer> locateDisabledAreas() {
         List<Integer> indicesDo = getIndices("do\\(\\)");
         List<Integer> indicesDont = getIndices("don['’]t");
-        Map<Integer, Integer> disabledAreas = calculateDisabledAreas(indicesDo, indicesDont);
 
-        return disabledAreas;
+        return calculateDisabledAreas(indicesDo, indicesDont);
     }
 
     private Map<Integer, Integer> calculateDisabledAreas(List<Integer> indicesDo, List<Integer> indicesDont) {
-        Map<Integer, Integer> disabledAreas = new HashMap<>();
+        TreeMap<Integer, Integer> disabledAreas = new TreeMap<>();
         for (Integer index : indicesDont) {
-            for (; lastFoundDoIndex < indicesDo.size(); lastFoundDoIndex++) {
-                if (indicesDo.get(lastFoundDoIndex) > index) {
-                    disabledAreas.put(index, indicesDo.get(lastFoundDoIndex));
+            if (isNewKeyHigherThenLastValue(disabledAreas, index)) {
+                for (; lastFoundDoIndex < indicesDo.size(); lastFoundDoIndex++) {
+                    if (indicesDo.get(lastFoundDoIndex) > index && !isValueAlreadyGiven(disabledAreas, indicesDo.get(lastFoundDoIndex))) {
+                        disabledAreas.put(index, indicesDo.get(lastFoundDoIndex));
+                        break;
+                    }
                 }
             }
         }
         return disabledAreas;
+    }
+
+    private boolean isNewKeyHigherThenLastValue(TreeMap<Integer, Integer> disabledAreas, Integer index) {
+        if (disabledAreas.isEmpty()) {
+            return true;
+        }
+        return disabledAreas.lastEntry().getValue() < index;
+    }
+
+    private boolean isValueAlreadyGiven(Map<Integer, Integer> disabledAreas, Integer value) {
+        for (Map.Entry<Integer, Integer> entry : disabledAreas.entrySet()) {
+            if (Objects.equals(entry.getValue(), value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private List<Integer> getIndices(String regex) {
@@ -66,7 +81,7 @@ class ExpressionExtractor {
 
         // Looking for Matches
         while (regexMatcher.find()) {
-            if (!IndexIsInForbiddenRange(regexMatcher.end())) {
+            if (!indexIsInForbiddenRange(regexMatcher.end())) {
                 // Extracting Numbers
                 int firstNumber = Integer.parseInt(regexMatcher.group(1));
                 int secondNumber = Integer.parseInt(regexMatcher.group(2));
@@ -76,7 +91,7 @@ class ExpressionExtractor {
         return foundPermittedExpressions;
     }
 
-    private boolean IndexIsInForbiddenRange(int index) {
+    private boolean indexIsInForbiddenRange(int index) {
         for (Map.Entry<Integer, Integer> entry : disabledAreas.entrySet()) {
             int areaStart = entry.getKey();
             int areaEnd = entry.getValue();
