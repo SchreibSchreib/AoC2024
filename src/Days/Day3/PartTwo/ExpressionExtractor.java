@@ -15,6 +15,7 @@ class ExpressionExtractor {
     private int lastFoundDoIndex = 0;
     private final Map<Integer, Integer> disabledAreas;
     private final List<Integer[]> foundPermittedExpressions;
+    private boolean isLastDont;
 
     public ExpressionExtractor(String regex) throws IOException {
         this.manipulatedInput = new InputFormatter();
@@ -25,7 +26,7 @@ class ExpressionExtractor {
 
     private Map<Integer, Integer> locateDisabledAreas() {
         List<Integer> indicesDo = getIndices("do\\(\\)");
-        List<Integer> indicesDont = getIndices("don['’]t");
+        List<Integer> indicesDont = getIndices("don[']t");
 
         return calculateDisabledAreas(indicesDo, indicesDont);
     }
@@ -33,16 +34,33 @@ class ExpressionExtractor {
     private Map<Integer, Integer> calculateDisabledAreas(List<Integer> indicesDo, List<Integer> indicesDont) {
         TreeMap<Integer, Integer> disabledAreas = new TreeMap<>();
         for (Integer index : indicesDont) {
+            if (isLastDont) {
+                break;
+            }
             if (isNewKeyHigherThenLastValue(disabledAreas, index)) {
                 for (; lastFoundDoIndex < indicesDo.size(); lastFoundDoIndex++) {
                     if (indicesDo.get(lastFoundDoIndex) > index && !isValueAlreadyGiven(disabledAreas, indicesDo.get(lastFoundDoIndex))) {
                         disabledAreas.put(index, indicesDo.get(lastFoundDoIndex));
                         break;
                     }
+                    if (isLastDont(index, indicesDo)) {
+                        disabledAreas.put(index, Integer.MAX_VALUE);
+                        break;
+                    }
                 }
             }
         }
         return disabledAreas;
+    }
+
+    private boolean isLastDont(Integer index, List<Integer> indicesDo) {
+        for (Integer allDoIndices : indicesDo) {
+            if (index < allDoIndices) {
+                return false;
+            }
+        }
+        this.isLastDont = true;
+        return true;
     }
 
     private boolean isNewKeyHigherThenLastValue(TreeMap<Integer, Integer> disabledAreas, Integer index) {
@@ -86,6 +104,7 @@ class ExpressionExtractor {
                 int firstNumber = Integer.parseInt(regexMatcher.group(1));
                 int secondNumber = Integer.parseInt(regexMatcher.group(2));
                 foundPermittedExpressions.add(new Integer[]{firstNumber, secondNumber});
+                System.out.println("Following values were added: " + firstNumber + " " + secondNumber);
             }
         }
         return foundPermittedExpressions;
@@ -97,6 +116,7 @@ class ExpressionExtractor {
             int areaEnd = entry.getValue();
 
             if (index > areaStart && index < areaEnd) {
+                System.out.println("index: " + index + " areaStart: " + areaStart + " areaEnd: " + areaEnd + " interpreted as true");
                 return true;
             }
         }
