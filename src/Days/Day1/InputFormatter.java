@@ -39,7 +39,7 @@ public class InputFormatter implements InputManipulatable<Integer[][]> {
     }
 
     @Override
-    public Integer[][] getFormattedInput() {
+    public Integer[][] getConvertedInput() {
         Integer[][] formattedPairs = new Integer[input.size()][2];
         for (int i = 0; i < input.size(); i++) {
             formattedPairs[i][0] = leftNumbers[i];
@@ -62,7 +62,7 @@ public class InputFormatter implements InputManipulatable<Integer[][]> {
         try {
             InputFormatter testFormat = new InputFormatter();
 
-            Integer[][] input = testFormat.getFormattedInput();
+            Integer[][] input = testFormat.getConvertedInput();
             System.out.println("Formattierter Input:");
 
             for (Integer[] pair : input) {

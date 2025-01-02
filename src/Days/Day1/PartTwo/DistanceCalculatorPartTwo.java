@@ -13,7 +13,7 @@ public class DistanceCalculatorPartTwo {
 
     public DistanceCalculatorPartTwo() throws IOException {
         this.manipulatedInput = new InputFormatter();
-        this.distance = calculateDistance(this.manipulatedInput.getFormattedInput());
+        this.distance = calculateDistance(this.manipulatedInput.getConvertedInput());
     }
 
     private int calculateDistance(Integer[][] input) {

@@ -81,7 +81,7 @@ class ExpressionExtractor {
 
     private List<Integer> getIndices(String regex) {
         Pattern pattern = Pattern.compile(regex);
-        Matcher regexMatcher = pattern.matcher(manipulatedInput.getFormattedInput());
+        Matcher regexMatcher = pattern.matcher(manipulatedInput.getConvertedInput());
 
         List<Integer> indices = new ArrayList<>();
 
@@ -93,7 +93,7 @@ class ExpressionExtractor {
 
     private List<Integer[]> findPermittedExpressions() {
         Pattern regexPattern = Pattern.compile(regularExpression);
-        Matcher regexMatcher = regexPattern.matcher(manipulatedInput.getFormattedInput());
+        Matcher regexMatcher = regexPattern.matcher(manipulatedInput.getConvertedInput());
 
         List<Integer[]> foundPermittedExpressions = new ArrayList<>();
 

@@ -8,13 +8,13 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class InputFormatter implements InputManipulatable<Integer[][]> {
+public class InputConverter implements InputManipulatable<Integer[][]> {
 
     private final List<String> input;
     private final Integer[][] formattedInput;
     private int size;
 
-    public InputFormatter() throws IOException {
+    public InputConverter() throws IOException {
         this.input = readFile();
         this.formattedInput = handleInput();
     }
@@ -41,7 +41,7 @@ public class InputFormatter implements InputManipulatable<Integer[][]> {
     }
 
     @Override
-    public Integer[][] getFormattedInput() {
+    public Integer[][] getConvertedInput() {
         return this.formattedInput;
     }
 
@@ -56,9 +56,9 @@ public class InputFormatter implements InputManipulatable<Integer[][]> {
 
     public static void main(String[] args) {
         try {
-            InputFormatter testFormat = new InputFormatter();
+            InputConverter testFormat = new InputConverter();
 
-            Integer[][] input = testFormat.getFormattedInput();
+            Integer[][] input = testFormat.getConvertedInput();
             System.out.println("Formattierter Input:");
 
             for (Integer[] pair : input) {

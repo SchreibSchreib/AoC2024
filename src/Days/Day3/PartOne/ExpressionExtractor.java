@@ -23,7 +23,7 @@ class ExpressionExtractor {
 
     private List<Integer[]> findPermittedExpressions() {
         Pattern regexPattern = Pattern.compile(regularExpression);
-        Matcher regexMatcher = regexPattern.matcher(manipulatedInput.getFormattedInput());
+        Matcher regexMatcher = regexPattern.matcher(manipulatedInput.getConvertedInput());
 
         List<Integer[]> foundPermittedExpressions = new ArrayList<>();
 

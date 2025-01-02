@@ -22,7 +22,7 @@ public class InputFormatter implements InputManipulatable<String> {
     }
 
     @Override
-    public String getFormattedInput() {
+    public String getConvertedInput() {
         return this.input;
     }
 
@@ -39,7 +39,7 @@ public class InputFormatter implements InputManipulatable<String> {
         try {
             InputFormatter testFormat = new InputFormatter();
 
-            String input = testFormat.getFormattedInput();
+            String input = testFormat.getConvertedInput();
             System.out.println(testFormat.getSize());
             System.out.println("Formattierter Input:");
         } catch (IOException e) {
