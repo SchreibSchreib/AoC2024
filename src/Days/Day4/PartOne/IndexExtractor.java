@@ -39,9 +39,10 @@ class IndexExtractor {
                     break;
                 case 2:
                     indicesOfChar = findAllIndicesForChar(manipulatedInput.getConvertedInput(), 'A');
-                    continue;
+                    break;
                 default:
                     indicesOfChar = findAllIndicesForChar(manipulatedInput.getConvertedInput(), 'S');
+                    break;
 
             }
             allIndices.add(indicesOfChar);
