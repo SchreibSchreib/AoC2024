@@ -1,7 +1,6 @@
-package Days.Day4.PartOne;
+package Days.Day4.PartTwo;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ public class ExtractorAnalyzer {
 
     private final IndexExtractor extractor;
     private final Map<Integer[], Integer> analyzedFunctionalPhrases;
-    private final Collection<Integer> values;
     private final char[] charsToLookFor = new char[]{'X', 'M', 'A', 'S'};
     private final int firstX = 0;
     private final int firstY = 0;
@@ -22,7 +20,6 @@ public class ExtractorAnalyzer {
         this.lastX = extractor.getLengthX();
         this.lastY = extractor.getLengthY();
         this.analyzedFunctionalPhrases = analyzeExtractedData();
-        this.values = analyzedFunctionalPhrases.values();
     }
 
     private Map<Integer[], Integer> analyzeExtractedData() {
@@ -37,39 +34,39 @@ public class ExtractorAnalyzer {
 
     private Integer validatePhrase(Integer yIndex, Integer xIndex) {
         Integer validWords = 0;
-        for (int xDirection = -1; xDirection <= 1; xDirection++) {
-            for (int yDirection = -1; yDirection <= 1; yDirection++) {
-
-                int fieldToCheckX = xIndex + xDirection;
-                int fieldToCheckY = yIndex + yDirection;
-
-                if (isWithinBounds(fieldToCheckX, fieldToCheckY)) {
-                    if (isFieldSearchCorrect(1, xIndex, yIndex, xDirection, yDirection)) {
-                        validWords++;
-                    }
-                }
+        for (int i = 1; i <= extractor.getExpressions().size(); i++) {
+            if (isFieldSearchCorrect(i, xIndex, yIndex)) {
+                validWords++;
             }
         }
         return validWords;
     }
 
-    private boolean isFieldSearchCorrect(int iteratorForCharIndex, Integer xIndex, Integer yIndex, Integer xDirection, Integer yDirection) {
+    private boolean isFieldSearchCorrect(int iteratorForCharIndex, Integer xIndex, Integer yIndex) {
         if (iteratorForCharIndex == charsToLookFor.length) {
             return true;
         }
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if (x == 0 && y == 0) {
+                    continue;
+                }
 
-        int fieldToCheckX = xIndex + xDirection;
-        int fieldToCheckY = yIndex + yDirection;
+                int fieldToCheckX = xIndex + x;
+                int fieldToCheckY = yIndex + y;
 
-        if (isWithinBounds(fieldToCheckX, fieldToCheckY)
-                && isCharToLookFor(iteratorForCharIndex, fieldToCheckX, fieldToCheckY)) {
-            return isFieldSearchCorrect(iteratorForCharIndex + 1, fieldToCheckX, fieldToCheckY, xDirection, yDirection);
+                if (fieldToCheckX < firstX || fieldToCheckX > lastX || fieldToCheckY < firstY || fieldToCheckY > lastY) {
+                    continue;
+                }
+                if (isCharToLookFor(iteratorForCharIndex, fieldToCheckX, fieldToCheckY)) {
+                    if (isFieldSearchCorrect(iteratorForCharIndex + 1, fieldToCheckX, fieldToCheckY)) {
+                        return true;
+                    }
+                }
+
+            }
         }
         return false;
-    }
-
-    private boolean isWithinBounds(int xIndex, int yIndex) {
-        return xIndex >= firstX && xIndex <= lastX && yIndex >= firstY && yIndex <= lastY;
     }
 
     private boolean isCharToLookFor(int iteratorForCharIndex, int fieldToCheckX, int fieldToCheckY) {
@@ -88,10 +85,6 @@ public class ExtractorAnalyzer {
             map.put(entry, 0);
         }
         return map;
-    }
-
-    public Collection<Integer> getValues() {
-        return values;
     }
 
 
