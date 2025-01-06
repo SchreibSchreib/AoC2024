@@ -23,6 +23,5 @@ public class Summarizer {
     public static void main(String[] args) throws IOException {
         Summarizer summarizer = new Summarizer();
         System.out.println(summarizer.result);
-        //2315
     }
 }
