@@ -1,7 +1,6 @@
-package Days.Day5.PartOne;
+package Days.Day5.PartTwo;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Summarizer {
@@ -24,6 +23,6 @@ public class Summarizer {
     public static void main(String[] args) throws IOException {
         Summarizer summarizer = new Summarizer();
         System.out.println(summarizer.sum);
-        //4957
+
     }
 }
