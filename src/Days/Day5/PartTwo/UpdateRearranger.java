@@ -26,45 +26,33 @@ public class UpdateRearranger {
     }
 
     private Integer[] rearrangeArray(Integer[] updates) {
-        Integer[] rearrangedUpdates = new Integer[updates.length];
+        List<Integer> rearrangedUpdatesList = new LinkedList<>();
+
         for (int i = 0; i < updates.length; i++) {
-            if (i == updates.length - 1) {
-                break;
+            if (i == 0) {
+                rearrangedUpdatesList.add(updates[i]);
+                continue;
             }
-            if (!orderingRules.containsKey(updates[i])) {
-                int lastNumber = updates[i];
-
-                updates[i] = updates[rearrangedUpdates.length - 1];
-                updates[rearrangedUpdates.length - 1] = lastNumber;
-            }
-            if (!containsCorrectRule(orderingRules.get(updates[i]), updates[i], updates[i + 1])) {
-                updates = rearrangeNumber(updates, updates[i], i + 1);
+            if (orderingRules.containsKey(updates[i])) {
+                rearrangedUpdatesList.add(checkForNewIndex(i - 1, updates[i], rearrangedUpdatesList),updates[i]);
             } else {
-                rearrangedUpdates = updates;
+                rearrangedUpdatesList.add(updates[i]);
             }
         }
-        return rearrangedUpdates;
+        return rearrangedUpdatesList.toArray(new Integer[0]);
     }
 
-    private Integer[] rearrangeNumber(Integer[] updates, Integer update, int indexOfMistake) {
-        List<Integer> rearrangedUpdates = new ArrayList<>(Arrays.asList(updates));
-        for (int leftNumbers = indexOfMistake - 1; leftNumbers >= 0; leftNumbers--) {
-            if (!containsCorrectRule(orderingRules.get(updates[leftNumbers]), updates[leftNumbers], update)) {
-                Collections.swap(rearrangedUpdates, leftNumbers, indexOfMistake);
-                break;
+    private Integer checkForNewIndex(int actualIndex, int foundNumber, List<Integer> rearrangedUpdatesList) {
+        int newIndex = actualIndex + 1;
+        for (int iteratingIndex = actualIndex; iteratingIndex >= 0; iteratingIndex--) {
+            for (Integer[] entry : orderingRules.get(foundNumber)) {
+                if (entry[1].equals(rearrangedUpdatesList.get(iteratingIndex))) {
+                    newIndex = iteratingIndex;
+                    break;
+                }
             }
         }
-        return rearrangedUpdates.toArray(new Integer[rearrangedUpdates.size()]);
-    }
-
-
-    private boolean containsCorrectRule(List<Integer[]> integers, int integerToCheck, int followingInteger) {
-        for (Integer[] producePage : integers) {
-            if (producePage[0] == integerToCheck && producePage[1] == followingInteger) {
-                return true;
-            }
-        }
-        return false;
+        return newIndex;
     }
 
     public List<Integer[]> getRearrangedUpdates() {
