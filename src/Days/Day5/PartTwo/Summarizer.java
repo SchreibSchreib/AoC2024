@@ -24,6 +24,5 @@ public class Summarizer {
         Summarizer summarizer = new Summarizer();
         System.out.println(summarizer.sum);
         //6938
-
     }
 }
