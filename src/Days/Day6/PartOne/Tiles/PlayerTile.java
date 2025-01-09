@@ -20,6 +20,12 @@ public class PlayerTile extends Tile {
         this.visitedTiles++;
     }
 
+    public void rotateTileSymbol() {
+        char[] directions = {'^', '>', 'v', '<'};
+        int indexNextDirection = new String(directions).indexOf(this.tileSymbol);
+        this.tileSymbol = directions[indexNextDirection + 1 % directions.length];
+    }
+
     public void setCoordinates(Direction direction) {
         switch (direction) {
             case XPOSITIVE -> this.xIndex++;

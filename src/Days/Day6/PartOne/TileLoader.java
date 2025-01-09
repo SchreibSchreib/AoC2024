@@ -21,9 +21,9 @@ public class TileLoader {
 
     private List<Tile[]> convertCharsToTiles(List<char[]> convertedInput) {
         List<Tile[]> tiles = new ArrayList<>();
-        Tile[] arrayOfTiles = new Tile[convertedInput.getFirst().length];
 
         for (int y = 0; y < convertedInput.size(); y++) {
+            Tile[] arrayOfTiles = new Tile[convertedInput.getFirst().length];
             for (int x = 0; x < arrayOfTiles.length; x++) {
                 switch (convertedInput.get(y)[x]) {
                     case '#' -> arrayOfTiles[x] = new ObstacleTile(y, x, '#');

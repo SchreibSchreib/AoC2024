@@ -4,7 +4,7 @@ public abstract class Tile {
 
     protected int yIndex;
     protected int xIndex;
-    private final char tileSymbol;
+    protected char tileSymbol;
 
     public Tile(int yIndex, int xIndex, char tileSymbol) {
         this.yIndex = yIndex;
