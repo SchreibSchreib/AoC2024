@@ -12,11 +12,24 @@ import java.util.List;
 
 public class TileLoader {
 
-    List<Tile[]> loadedTiles;
+    private final List<Tile[]> loadedTiles;
+    private final PlayerTile playerTile;
 
     public TileLoader() throws IOException {
         InputFormatter input = new InputFormatter();
         this.loadedTiles = convertCharsToTiles(input.getConvertedInput());
+        this.playerTile = findPlayer();
+    }
+
+    private PlayerTile findPlayer() {
+        for (Tile[] tiles : this.loadedTiles) {
+            for (Tile tile : tiles) {
+                if (tile instanceof PlayerTile) {
+                    return (PlayerTile) tile;
+                }
+            }
+        }
+        throw new IllegalStateException("No PlayerTile found on the map!");
     }
 
     private List<Tile[]> convertCharsToTiles(List<char[]> convertedInput) {
@@ -41,6 +54,10 @@ public class TileLoader {
 
     public List<Tile[]> getLoadedTiles() {
         return this.loadedTiles;
+    }
+
+    public PlayerTile getPlayerTile() {
+        return this.playerTile;
     }
 
     public static void main(String[] args) throws IOException {

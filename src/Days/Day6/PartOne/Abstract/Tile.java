@@ -2,6 +2,7 @@ package Days.Day6.PartOne.Abstract;
 
 public abstract class Tile {
 
+    protected boolean isVisited = false;
     protected int yIndex;
     protected int xIndex;
     protected char tileSymbol;
@@ -25,5 +26,14 @@ public abstract class Tile {
         return this.tileSymbol;
     }
 
+    public boolean isVisited() {
+        return this.isVisited;
+    }
+
+    public void toggleVisitStatus() {
+        this.isVisited = !this.isVisited;
+    }
+
     public abstract void process();
+
 }
