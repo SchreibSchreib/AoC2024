@@ -14,6 +14,12 @@ public class PlayerTile extends Tile {
         this.isVisited = true;
     }
 
+    public PlayerTile(PlayerTile playerTileToCopy) {
+        super(playerTileToCopy.getYIndex(), playerTileToCopy.getXIndex(), playerTileToCopy.getTileSymbol());
+        this.visitedTiles = playerTileToCopy.getVisitedTiles();
+        this.currentDirection = playerTileToCopy.getCurrentDirection();
+    }
+
     private Direction setCurrentDirection() {
         return switch (this.tileSymbol) {
             case '>' -> Direction.XPOSITIVE;
@@ -23,9 +29,18 @@ public class PlayerTile extends Tile {
         };
     }
 
+    public Direction getCurrentDirection() {
+        return this.currentDirection;
+    }
+
     @Override
     public void process() {
         System.out.print("Checking next tile: ");
+    }
+
+    @Override
+    public Tile copy() {
+        return new PlayerTile(this);
     }
 
     public void increaseVisitedTiles() {
@@ -47,6 +62,7 @@ public class PlayerTile extends Tile {
             case YNEGATIVE -> this.yIndex--;
         }
     }
+
     public void setYIndex(int yIndex) {
         this.yIndex = yIndex;
     }

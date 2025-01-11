@@ -11,7 +11,12 @@ public abstract class Tile {
         this.yIndex = yIndex;
         this.xIndex = xIndex;
         this.tileSymbol = tileSymbol;
+    }
 
+    public Tile(Tile tileToClone){
+        this.yIndex = tileToClone.getYIndex();
+        this.xIndex = tileToClone.getXIndex();
+        this.tileSymbol = tileToClone.getTileSymbol();
     }
 
     public int getYIndex() {
@@ -30,10 +35,15 @@ public abstract class Tile {
         return this.isVisited;
     }
 
+    public void setTileSymbol(char tileSymbol) {
+        this.tileSymbol = tileSymbol;
+    }
+
     public void toggleVisitStatus() {
         this.isVisited = !this.isVisited;
     }
 
     public abstract void process();
 
+    public abstract Tile copy();
 }
