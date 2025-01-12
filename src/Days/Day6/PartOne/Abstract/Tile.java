@@ -6,17 +6,13 @@ public abstract class Tile {
     protected int yIndex;
     protected int xIndex;
     protected char tileSymbol;
+    protected int numberOfTimesTheGuardStepsOnIt;
 
     public Tile(int yIndex, int xIndex, char tileSymbol) {
         this.yIndex = yIndex;
         this.xIndex = xIndex;
         this.tileSymbol = tileSymbol;
-    }
-
-    public Tile(Tile tileToClone){
-        this.yIndex = tileToClone.getYIndex();
-        this.xIndex = tileToClone.getXIndex();
-        this.tileSymbol = tileToClone.getTileSymbol();
+        this.numberOfTimesTheGuardStepsOnIt = 0;
     }
 
     public int getYIndex() {
@@ -46,4 +42,16 @@ public abstract class Tile {
     public abstract void process();
 
     public abstract Tile copy();
+
+    public void increaseNumberOfTimesTheGuardStepsOnIt() {
+        this.numberOfTimesTheGuardStepsOnIt++;
+    }
+
+    public void decreaseNumberOfTimesTheGuardStepsOnIt() {
+        this.numberOfTimesTheGuardStepsOnIt--;
+    }
+
+    public int getNumberOfTimesTheGuardStepsOnIt() {
+        return this.numberOfTimesTheGuardStepsOnIt;
+    }
 }

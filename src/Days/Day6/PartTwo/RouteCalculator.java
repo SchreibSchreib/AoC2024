@@ -33,7 +33,7 @@ public class RouteCalculator {
         while (!reachedEnd) {
             movePlayer();
         }
-        return ObstaclePlacer.getNumberOfValidObjects();
+        return ObstaclePlacer.getFieldsWereObstaclesArePlaced().size();
     }
 
     private void movePlayer() {
@@ -98,8 +98,8 @@ public class RouteCalculator {
 
     public static void main(String[] args) throws IOException {
         RouteCalculator testCalc = new RouteCalculator();
-        System.out.println(ObstaclePlacer.getNumberOfValidObjects());
-
+        System.out.println(testCalc.validPlacedObjects);
+        System.out.println(testCalc.playerTile.getVisitedTiles());
         for (Tile[] tiles : testCalc.tileMap) {
             for (Tile tile : tiles) {
                 System.out.print(tile.getTileSymbol());

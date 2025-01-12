@@ -8,112 +8,84 @@ import java.util.*;
 
 public class ObstaclePlacer {
 
-    private static int numberOfValidObjects;
-    private static int numberOfVisitedTilesMoved;
-    private static List<String> fieldsWhereObjectsArePlaced = new ArrayList<>();
+
+    private List<Tile[]> copiedMap;
+    private PlayerTile copiedPlayer;
+    private boolean wasAlreadyHere = false;
+    private boolean causesObstacleLoop;
     private boolean reachedEnd = false;
-    private final List<Tile[]> tileMap;
-    private final PlayerTile playerTile;
-    private int currentPosY;
-    private int currentPosX;
-    private boolean foundLoop = false;
+    private static List<String> fieldsWereObstaclesArePlaced = new ArrayList<>();
 
-    public ObstaclePlacer(List<Tile[]> newMap, PlayerTile playerTile, int yIndexObstacle, int xIndexObstacle) {
-        this.tileMap = loadObstacle(newMap, yIndexObstacle, xIndexObstacle);
-        this.playerTile = playerTile;
-        this.currentPosY = playerTile.getYIndex();
-        this.currentPosX = playerTile.getXIndex();
-        checkForLoop(fieldsWhereObjectsArePlaced, currentPosY, currentPosX);
-    }
-
-    private List<Tile[]> loadObstacle(List<Tile[]> newMap, int yIndexObstacle, int xIndexObstacle) {
-        newMap.get(yIndexObstacle)[xIndexObstacle] = new ObstacleTile(yIndexObstacle, xIndexObstacle, '#');
-        return newMap;
-    }
-
-    private void checkForLoop(List<String> fieldsWhereObjectsArePlaced, int yIndexObject, int xIndexObject) {
-        boolean isLoop = calculateRoute();
-        if (isLoop) {
-            if (fieldsWhereObjectsArePlaced.contains(yIndexObject + " " + xIndexObject)) {
-                return;
-            }
-            fieldsWhereObjectsArePlaced.add(yIndexObject + " " + xIndexObject);
-            increaseNumberOfValidObjects();
+    public ObstaclePlacer(List<Tile[]> copiedMap, PlayerTile copiedPlayer, int nextFieldY, int nextFieldX) {
+        this.copiedMap = copiedMap;
+        placeObstacle(nextFieldY, nextFieldX);
+        this.copiedPlayer = copiedPlayer;
+        if (!wasAlreadyHere) {
+            this.causesObstacleLoop = findLoop(nextFieldY, nextFieldX);
         }
     }
 
+    private void placeObstacle(int nextFieldY, int nextFieldX) {
+        Tile nextTile = copiedMap.get(nextFieldY)[nextFieldX];
+        if (!nextTile.isVisited()) {
+            this.copiedMap.get(nextFieldY)[nextFieldX] = new ObstacleTile(nextFieldY, nextFieldX, '#');
+            return;
+        }
+        this.wasAlreadyHere = true;
+    }
+
+    private boolean findLoop(int nextFieldY, int nextFieldX) {
+        while (!reachedEnd) {
+            movePlayer();
+            if (causesObstacleLoop) {
+                if (!fieldsWereObstaclesArePlaced.contains(nextFieldY + " " + nextFieldX)) {
+                    fieldsWereObstaclesArePlaced.add(nextFieldY + " " + nextFieldX);
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private void movePlayer() {
+        Tile currentTile = copiedMap.get(copiedPlayer.getYIndex())[copiedPlayer.getXIndex()];
+        copiedPlayer.setCoordinates();
+        Tile nextTile;
+        try {
+            nextTile = copiedMap.get(copiedPlayer.getYIndex())[copiedPlayer.getXIndex()];
+        } catch (IndexOutOfBoundsException e) {
+            reachedEnd = true;
+            return;
+        }
+
+        currentTile.increaseNumberOfTimesTheGuardStepsOnIt();
+
+        if (nextTile instanceof ObstacleTile) {
+            copiedPlayer.rotateTileSymbol();
+            copiedPlayer.decreaseNumberOfTimesTheGuardStepsOnIt();
+            copiedPlayer.setYIndex(currentTile.getYIndex());
+            copiedPlayer.setXIndex(currentTile.getXIndex());
+            return;
+        }
+
+        if (nextTile.getNumberOfTimesTheGuardStepsOnIt() > 4) {
+            this.causesObstacleLoop = true;
+            printMap();
+        }
+
+    }
+
     private void printMap() {
-        for (Tile[] tiles : tileMap) {
-            for (Tile tile : tiles) {
+        for (Tile[] row : copiedMap) {
+            for (Tile tile : row) {
                 System.out.print(tile.getTileSymbol());
             }
             System.out.println();
         }
     }
 
-    private boolean calculateRoute() {
-        System.out.print("Checking for Loop...");
-        while (!reachedEnd) {
-            movePlayer();
-            if (foundLoop) {
-                System.out.println("Found loop!");
-                return true;
-            }
-        }
-        System.out.println("Did not find loop!");
-        return false;
-    }
-
-    private void movePlayer() {
-        tileMap.get(playerTile.getYIndex())[playerTile.getXIndex()].setTileSymbol(playerTile.getTileSymbol());
-        playerTile.setCoordinates();
-        int newY = playerTile.getYIndex();
-        int newX = playerTile.getXIndex();
-
-        if (isOutOfBounds(newY, newX)) {
-            reachedEnd = true;
-            return;
-        }
-
-        Tile nextTile = tileMap.get(newY)[newX];
-
-        if (nextTile.isVisited()) {
-            numberOfVisitedTilesMoved++;
-        }
-
-        if (numberOfVisitedTilesMoved > 20000) {
-            foundLoop = true;
-            numberOfVisitedTilesMoved = 0;
-            return;
-        }
-
-        processMove(nextTile, newY, newX);
-    }
-
-    private void processMove(Tile nextTile, int newY, int newX) {
-        if (!(nextTile instanceof ObstacleTile)) {
-            currentPosY = newY;
-            currentPosX = newX;
-            if (!nextTile.isVisited()) {
-                playerTile.increaseVisitedTiles();
-                nextTile.toggleVisitStatus();
-            }
-        } else {
-            playerTile.rotateTileSymbol();
-            playerTile.setYIndex(currentPosY);
-            playerTile.setXIndex(currentPosX);
-        }
-    }
-
-    private boolean isOutOfBounds(int newY, int newX) {
-        return (newY > tileMap.size() - 1 || newY < 0) || (newX > tileMap.get(newY).length - 1 || newX < 0);
-    }
-
-    public static int getNumberOfValidObjects() {
-        return numberOfValidObjects;
-    }
-
-    public void increaseNumberOfValidObjects() {
-        numberOfValidObjects++;
+    public static List<String> getFieldsWereObstaclesArePlaced() {
+        return fieldsWereObstaclesArePlaced;
     }
 }

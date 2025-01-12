@@ -35,7 +35,7 @@ public class PlayerTile extends Tile {
 
     @Override
     public void process() {
-        System.out.print("Checking next tile: ");
+        System.out.println("Checking next tile: ");
     }
 
     @Override
