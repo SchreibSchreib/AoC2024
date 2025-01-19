@@ -8,10 +8,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InputFormatter implements InputManipulatable<List<Integer[]>> {
+public class InputFormatter implements InputManipulatable<List<Long[]>> {
 
     private final List<String> input;
-    private final List<Integer[]> formattedInput;
+    private final List<Long[]> formattedInput;
     private int size;
 
     public InputFormatter() throws IOException {
@@ -19,25 +19,25 @@ public class InputFormatter implements InputManipulatable<List<Integer[]>> {
         this.formattedInput = handleInput();
     }
 
-    private List<Integer[]> handleInput() {
-        List<Integer[]> inputAsCharArray = new ArrayList<>();
+    private List<Long[]> handleInput() {
+        List<Long[]> inputAsCharArray = new ArrayList<>();
         for (String line : this.input) {
             inputAsCharArray.add(splitLine(line));
         }
         return inputAsCharArray;
     }
 
-    private Integer[] splitLine(String line) {
+    private Long[] splitLine(String line) {
         String[] lineArray = line.replace(":", "").trim().split(" ");
-        Integer[] numbers = new Integer[lineArray.length];
+        Long[] numbers = new Long[lineArray.length];
         for (int i = 0; i < lineArray.length; i++) {
-            numbers[i] = Integer.parseInt(lineArray[i]);
+            numbers[i] = Long.parseLong(lineArray[i]);
         }
         return numbers;
     }
 
     private List<String> readFile() throws IOException {
-        List<String> data = Files.readAllLines(Paths.get("src/Days/Day7/TestInput.txt"));
+        List<String> data = Files.readAllLines(Paths.get("src/Days/Day7/Input.txt"));
         setSize(data.size());
         return data;
     }
@@ -47,7 +47,7 @@ public class InputFormatter implements InputManipulatable<List<Integer[]>> {
     }
 
     @Override
-    public List<Integer[]> getConvertedInput() {
+    public List<Long[]> getConvertedInput() {
         return this.formattedInput;
     }
 
@@ -59,8 +59,8 @@ public class InputFormatter implements InputManipulatable<List<Integer[]>> {
     public static void main(String[] args) {
         try {
             InputFormatter inputConverter = new InputFormatter();
-            for (Integer[] line : inputConverter.getConvertedInput()) {
-                for (int c : line) {
+            for (Long[] line : inputConverter.getConvertedInput()) {
+                for (Long c : line) {
                     System.out.print(c + " ");
                 }
                 System.out.println();

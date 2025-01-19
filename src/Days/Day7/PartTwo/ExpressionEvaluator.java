@@ -1,4 +1,4 @@
-package Days.Day7.PartOne;
+package Days.Day7.PartTwo;
 
 import Days.Day7.InputFormatter;
 import Interfaces.InputManipulatable;
@@ -48,9 +48,11 @@ public class ExpressionEvaluator {
         }
 
         Long nextNumber = numbersToCalculate[index];
+        String concatNumber =  currentResult.toString().concat(nextNumber.toString());
 
         return recursiveEvaluation(numbersToCalculate, index + 1, currentResult + nextNumber, result) ||
-                recursiveEvaluation(numbersToCalculate, index + 1, currentResult * nextNumber, result);
+                recursiveEvaluation(numbersToCalculate, index + 1, currentResult * nextNumber, result) ||
+                recursiveEvaluation(numbersToCalculate, index + 1, Long.parseLong(concatNumber), result);
     }
 
     private Long[] extractNumbers(Long[] input) {
