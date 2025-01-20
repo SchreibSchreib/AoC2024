@@ -44,7 +44,7 @@ public class InputFormatter implements InputManipulatable<Map<Character, List<In
 
 
     private List<String> readFile() throws IOException {
-        List<String> data = Files.readAllLines(Paths.get("src/Days/Day8/TestInput.txt"));
+        List<String> data = Files.readAllLines(Paths.get("src/Days/Day8/Input.txt"));
         setSize(data.size());
         return data;
     }

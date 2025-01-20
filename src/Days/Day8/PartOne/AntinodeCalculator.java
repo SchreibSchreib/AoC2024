@@ -4,12 +4,14 @@ import Days.Day8.InputFormatter;
 import Interfaces.InputManipulatable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class AntinodeCalculator {
 
     private final InputManipulatable<Map<Character, List<Integer[]>>> antennaInformations;
+    private List<int[]> foundLocations = new ArrayList<>();
     private final int[] boundsY = new int[]{0, 49};
     private final int[] boundsX = new int[]{0, 49};
     private final int numberOfAntinodes;
@@ -33,19 +35,60 @@ public class AntinodeCalculator {
         int antinodes = 0;
 
         for (int i = 0; i < list.size(); i++) {
-            Integer[] entry = list.get(i);
+            Integer[] firstAntenna = list.get(i);
             for (int j = i + 1; j < list.size(); j++) {
-                Integer[] next = list.get(j);
-                int stepsInY = Math.abs(entry[0] - next[0]);
-                int stepsInX = Math.abs(entry[1] - next[1]);
-                System.out.println(stepsInY + " " + stepsInX);
+                Integer[] secondAntenna = list.get(j);
+                antinodes += calculatePositions(firstAntenna, secondAntenna, Integer.compare(firstAntenna[1] - secondAntenna[1], 0));
             }
         }
         return antinodes;
     }
 
+    private int calculatePositions(Integer[] firstAntenna, Integer[] secondAntenna, int direction) {
+        int validPositions = 0;
+        int distanceY = Math.abs(firstAntenna[0] - secondAntenna[0]);
+        int distanceX = Math.abs(firstAntenna[1] - secondAntenna[1]);
+        int[] firstPosition;
+        int[] secondPosition;
+
+        if (direction == 1) {
+            firstPosition = new int[]{firstAntenna[0] - distanceY, firstAntenna[1] + distanceX};
+            secondPosition = new int[]{secondAntenna[0] + distanceY, secondAntenna[1] - distanceX};
+
+        } else {
+            firstPosition = new int[]{firstAntenna[0] - distanceY, firstAntenna[1] - distanceX};
+            secondPosition = new int[]{secondAntenna[0] + distanceY, secondAntenna[1] + distanceX};
+        }
+
+        if (isInBounds(firstPosition) && !isAlreadyFound(firstPosition)) {
+            validPositions++;
+        }
+        if (isInBounds(secondPosition) && !isAlreadyFound(secondPosition)) {
+            validPositions++;
+        }
+        this.foundLocations.add(firstPosition);
+        this.foundLocations.add(secondPosition);
+        return validPositions;
+    }
+
+    private boolean isAlreadyFound(int[] position) {
+        for (int[] location : this.foundLocations) {
+            if (position[0] == location[0] && position[1] == location[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isInBounds(int[] position) {
+        return (position[0] >= boundsY[0] && position[1] >= boundsX[0]) && (position[0] <= boundsY[1] && position[1] <= boundsX[1]);
+    }
+
+
     public static void main(String[] args) throws IOException {
-        new AntinodeCalculator();
+        AntinodeCalculator testCalculator = new AntinodeCalculator();
+        System.out.println(testCalculator.numberOfAntinodes);
+        //214
     }
 
 }
