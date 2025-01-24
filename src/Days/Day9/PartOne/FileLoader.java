@@ -29,6 +29,14 @@ public class FileLoader {
         }
     }
 
+    public Map<Integer, Integer[]> getMappedNumbersWithLength() {
+        return mappedNumbersWithLength;
+    }
+
+    public List<Integer[]> getListedPositionsOfDots() {
+        return listedPositionsOfDots;
+    }
+
     public static void main(String[] args) throws IOException {
         FileLoader fileLoader = new FileLoader();
     }
