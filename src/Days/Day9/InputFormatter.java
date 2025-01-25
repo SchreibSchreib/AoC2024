@@ -30,7 +30,7 @@ public class InputFormatter implements InputManipulatable<List<Integer>> {
     }
 
     private List<String> readFile() throws IOException {
-        List<String> data = Files.readAllLines(Paths.get("src/Days/Day9/TestInput.txt"));
+        List<String> data = Files.readAllLines(Paths.get("src/Days/Day9/Input.txt"));
         setSize(data.getFirst().length());
         return data;
     }

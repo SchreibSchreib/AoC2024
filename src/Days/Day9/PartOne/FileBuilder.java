@@ -44,18 +44,19 @@ public class FileBuilder {
         int lastNumberToFind = 0;
 
         for (int indexForDotIteration = 0; indexForDotIteration < listedPositionsOfDots.size(); indexForDotIteration++) {
-            int indexToInsert = calculateIndex(fileToBuild, lastIndex,lastNumberToFind);
+            int indexToInsert = calculateIndex(fileToBuild, lastIndex, lastNumberToFind);
+
+            if (indexToInsert == -1) {
+                break;
+            }
+
             Integer[] takeIntegersToSwap = loadArrayWithIntegers(fileToBuild, listedPositionsOfDots.get(indexForDotIteration)[1]);
             for (int indexForSwappingNumbers = listedPositionsOfDots.get(indexForDotIteration)[1]; indexForSwappingNumbers > 0; indexForSwappingNumbers--) {
-                fileToBuild.add(indexToInsert ,takeIntegersToSwap[takeIntegersToSwap.length - indexForSwappingNumbers]);
+                fileToBuild.add(indexToInsert, takeIntegersToSwap[takeIntegersToSwap.length - indexForSwappingNumbers]);
             }
-            lastIndex = indexToInsert;
+            lastIndex = indexToInsert + takeIntegersToSwap.length;
             lastNumberToFind++;
             deleteEntries(fileToBuild, takeIntegersToSwap.length);
-            for (Integer number : fileToBuild) {
-                System.out.print(number);
-            }
-            System.out.println();
         }
     }
 
@@ -71,7 +72,7 @@ public class FileBuilder {
                 return lastIndex;
             }
         }
-        return 0;
+        return -1;
     }
 
     private Integer[] loadArrayWithIntegers(List<Integer> fileToBuild, Integer integer) {
@@ -82,8 +83,11 @@ public class FileBuilder {
         return integersToLoad;
     }
 
+    public List<Integer> getCorrectOrderedFile() {
+        return this.correctOrderedFile;
+    }
+
     public static void main(String[] args) throws IOException {
         FileBuilder testBuilder = new FileBuilder();
-
     }
 }
