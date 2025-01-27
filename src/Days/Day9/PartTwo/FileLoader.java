@@ -11,28 +11,34 @@ public class FileLoader {
 
     private final List<Integer> manipulatedInput;
     private final Map<Integer, Integer[]> mappedNumbersWithLength = new HashMap<>();
-    private final Map<Integer, Integer> mappedPositionsOfDots = new HashMap<>();
+    private final Map<Integer, Integer[]> mappedPositionsOfDots = new HashMap<>();
+    private final int highestIndex;
 
     public FileLoader() throws IOException {
         this.manipulatedInput = new InputFormatter().getConvertedInput();
+        this.highestIndex = manipulatedInput.size();
         loadLists();
     }
 
     private void loadLists() {
         for (int index = 0; index < manipulatedInput.size(); index++) {
             if (index % 2 == 0) {
-                mappedNumbersWithLength.put(index / 2, new Integer[]{index, manipulatedInput.get(index)});
+                mappedNumbersWithLength.put(index, new Integer[]{index / 2, manipulatedInput.get(index)});
             } else {
-                mappedPositionsOfDots.put(index, manipulatedInput.get(index));
+                mappedPositionsOfDots.put(index, new Integer[]{index / 2, manipulatedInput.get(index)});
             }
         }
+    }
+
+    public int getHighestIndex() {
+        return highestIndex;
     }
 
     public Map<Integer, Integer[]> getMappedNumbersWithLength() {
         return mappedNumbersWithLength;
     }
 
-    public Map<Integer, Integer> getMappedPositionsOfDots() {
+    public Map<Integer, Integer[]> getMappedPositionsOfDots() {
         return mappedPositionsOfDots;
     }
 

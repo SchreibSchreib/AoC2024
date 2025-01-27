@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Summarizer {
 
-    /*private List<Integer> fileToCalculate;
+    private List<Integer> fileToCalculate;
     private Long sumOfFile;
 
     public Summarizer() throws IOException {
-        this.fileToCalculate = new FileBuilder().getCorrectOrderedFile();
+        this.fileToCalculate = new FileFragmenter().getCorrectFragmentedFile();
         this.sumOfFile = calculate();
     }
 
@@ -25,5 +25,6 @@ public class Summarizer {
     public static void main(String[] args) throws IOException {
         Summarizer testSummarizer = new Summarizer();
         System.out.println(testSummarizer.sumOfFile);
-    }*/
+        //6326952672104
+    }
 }
