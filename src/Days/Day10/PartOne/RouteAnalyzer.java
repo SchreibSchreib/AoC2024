@@ -17,25 +17,25 @@ public class RouteAnalyzer {
     public RouteAnalyzer(Height currentHeight, List<Height[]> mapInformation) {
         this.currentHeight = currentHeight;
         this.mapInformation = mapInformation;
-        this.boundsY = new int[]{0, mapInformation.size()};
-        this.boundsX = new int[]{0, mapInformation.getFirst().length};
+        boundsY = new int[]{0, mapInformation.size()};
+        boundsX = new int[]{0, mapInformation.getFirst().length};
         analyzeRoute();
-        for (Height crossRoad : this.crossRoads) {
+        for (Height crossRoad : crossRoads) {
             RouteAnalyzer newRoute = new RouteAnalyzer(crossRoad, this.mapInformation);
             numberOfWorkingPaths += newRoute.getNumberOfWorkingPaths();
         }
     }
 
     private void analyzeRoute() {
-        while (!this.haveReachedEnd) {
+        while (!haveReachedEnd) {
             if (isPathContinuing()) {
-                if (this.currentHeight.getHeight() == 9) {
-                    this.numberOfWorkingPaths++;
-                    this.haveReachedEnd = true;
+                if (currentHeight.getHeight() == 9) {
+                    numberOfWorkingPaths++;
+                    haveReachedEnd = true;
                 }
                 continue;
             } else {
-                this.haveReachedEnd = true;
+                haveReachedEnd = true;
             }
         }
     }
@@ -44,13 +44,13 @@ public class RouteAnalyzer {
         List<Height> foundPaths = broadSearch();
 
         if (foundCrossroad(foundPaths)) {
-            crossRoads.add(this.currentHeight);
+            crossRoads.add(currentHeight);
         }
-        this.walkedFields.add(this.currentHeight);
+        walkedFields.add(currentHeight);
 
         if (!foundPaths.isEmpty()) {
-            this.currentHeight = foundPaths.getFirst();
-            this.currentHeight.setSteppedOn();
+            currentHeight = foundPaths.getFirst();
+            currentHeight.setSteppedOn();
             return true;
         }
 
@@ -65,22 +65,22 @@ public class RouteAnalyzer {
         List<Height> foundPaths = new ArrayList<>();
 
         for (int y = -1; y <= 1; y += 2) {
-            int yIndex = this.currentHeight.getIndex()[0] + y;
-            int xIndex = this.currentHeight.getIndex()[1];
+            int yIndex = currentHeight.getIndex()[0] + y;
+            int xIndex = currentHeight.getIndex()[1];
             if (isIndexInBoundsY(yIndex)) {
-                Height nextHeight = this.mapInformation.get(yIndex)[xIndex];
-                if (nextHeight.getHeight() == this.currentHeight.getNextHeightToSearch() && !nextHeight.isAlreadySteppedOn()) {
+                Height nextHeight = mapInformation.get(yIndex)[xIndex];
+                if (nextHeight.getHeight() == currentHeight.getNextHeightToSearch() && !nextHeight.isAlreadySteppedOn()) {
                     foundPaths.add(nextHeight);
                 }
             }
         }
 
         for (int x = -1; x <= 1; x += 2) {
-            int yIndex = this.currentHeight.getIndex()[0];
-            int xIndex = this.currentHeight.getIndex()[1] + x;
+            int yIndex = currentHeight.getIndex()[0];
+            int xIndex = currentHeight.getIndex()[1] + x;
             if (isIndexInBoundsX(xIndex)) {
-                Height nextHeight = this.mapInformation.get(yIndex)[xIndex];
-                if (nextHeight.getHeight() == this.currentHeight.getNextHeightToSearch() && !nextHeight.isAlreadySteppedOn()) {
+                Height nextHeight = mapInformation.get(yIndex)[xIndex];
+                if (nextHeight.getHeight() == currentHeight.getNextHeightToSearch() && !nextHeight.isAlreadySteppedOn()) {
                     foundPaths.add(nextHeight);
                 }
             }
@@ -90,14 +90,14 @@ public class RouteAnalyzer {
     }
 
     private boolean isIndexInBoundsX(int xIndex) {
-        return xIndex >= this.boundsX[0] && xIndex < this.boundsX[1];
+        return xIndex >= boundsX[0] && xIndex < boundsX[1];
     }
 
     private boolean isIndexInBoundsY(int yIndex) {
-        return yIndex >= this.boundsY[0] && yIndex < this.boundsY[1];
+        return yIndex >= boundsY[0] && yIndex < boundsY[1];
     }
 
     public int getNumberOfWorkingPaths() {
-        return this.numberOfWorkingPaths;
+        return numberOfWorkingPaths;
     }
 }

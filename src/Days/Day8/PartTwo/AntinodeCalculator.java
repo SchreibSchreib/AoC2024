@@ -18,19 +18,19 @@ public class AntinodeCalculator {
     private final int numberOfAntinodes;
 
     public AntinodeCalculator() throws IOException {
-        this.antennaInformations = new InputFormatter();
-        this.numberOfAntinodes = calculateAntinodes();
+        antennaInformations = new InputFormatter();
+        numberOfAntinodes = calculateAntinodes();
     }
 
     private int calculateAntinodes() {
         int numberOfAntinodes = 0;
 
-        for (Map.Entry<Character, List<Integer[]>> entry : this.antennaInformations.getConvertedInput().entrySet()){
+        for (Map.Entry<Character, List<Integer[]>> entry : antennaInformations.getConvertedInput().entrySet()){
             List<Integer[]> list = entry.getValue();
-            this.foundLocations.addAll(list);
+            foundLocations.addAll(list);
         }
 
-        for (Map.Entry<Character, List<Integer[]>> entry : this.antennaInformations.getConvertedInput().entrySet()) {
+        for (Map.Entry<Character, List<Integer[]>> entry : antennaInformations.getConvertedInput().entrySet()) {
             List<Integer[]> list = entry.getValue();
             numberOfAntinodes += list.size();
             numberOfAntinodes += findAntinodesForThisList(list);
@@ -71,14 +71,14 @@ public class AntinodeCalculator {
         if (isFirstIteration && isInBounds(firstPosition)) {
             if (isNotFound(firstPosition)) {
                 validPositions++;
-                this.foundLocations.add(firstPosition);
+                foundLocations.add(firstPosition);
             }
             validPositions += calculatePositionsRecursive(firstPosition, firstAntenna, direction, isFirstIteration);
         }
         if (!isFirstIteration && isInBounds(secondPosition)) {
             if (isNotFound(secondPosition)) {
                 validPositions++;
-                this.foundLocations.add(secondPosition);
+                foundLocations.add(secondPosition);
             }
             validPositions += calculatePositionsRecursive(secondAntenna, secondPosition, direction, isFirstIteration);
         }
@@ -86,7 +86,7 @@ public class AntinodeCalculator {
     }
 
     private boolean isNotFound(Integer[] position) {
-        for (Integer[] location : this.foundLocations) {
+        for (Integer[] location : foundLocations) {
             if (Objects.equals(position[0], location[0]) && Objects.equals(position[1], location[1])) {
                 return false;
             }

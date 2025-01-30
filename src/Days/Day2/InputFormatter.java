@@ -8,19 +8,19 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class InputConverter implements InputManipulatable<Integer[][]> {
+public class InputFormatter implements InputManipulatable<Integer[][]> {
 
     private final List<String> input;
     private final Integer[][] formattedInput;
     private int size;
 
-    public InputConverter() throws IOException {
-        this.input = readFile();
-        this.formattedInput = handleInput();
+    public InputFormatter() throws IOException {
+        input = readFile();
+        formattedInput = handleInput();
     }
 
     private Integer[][] handleInput() {
-        Integer[][] newInput = new Integer[this.size][];
+        Integer[][] newInput = new Integer[size][];
         for (int i = 0; i < input.size(); i++) {
             Integer[] row = convertStringToIntArray(input.get(i));
             newInput[i] = row;
@@ -42,7 +42,7 @@ public class InputConverter implements InputManipulatable<Integer[][]> {
 
     @Override
     public Integer[][] getConvertedInput() {
-        return this.formattedInput;
+        return formattedInput;
     }
 
     private void setSize(int size) {
@@ -51,12 +51,12 @@ public class InputConverter implements InputManipulatable<Integer[][]> {
 
     @Override
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     public static void main(String[] args) {
         try {
-            InputConverter testFormat = new InputConverter();
+            InputFormatter testFormat = new InputFormatter();
 
             Integer[][] input = testFormat.getConvertedInput();
             System.out.println("Formattierter Input:");

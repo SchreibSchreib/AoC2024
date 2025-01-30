@@ -12,9 +12,9 @@ public class InputMapper {
     private final List<Integer[]> producePages;
 
     public InputMapper() throws IOException {
-        this.preformattedInput = new InputFormatter().getConvertedInput();
-        this.orderingRules = loadMap();
-        this.producePages = loadList();
+        preformattedInput = new InputFormatter().getConvertedInput();
+        orderingRules = loadMap();
+        producePages = loadList();
     }
 
     private List<Integer[]> loadList() {
@@ -42,11 +42,11 @@ public class InputMapper {
     }
 
     public List<Integer[]> getProducePages() {
-        return this.producePages;
+        return producePages;
     }
 
     public Map<Integer, List<Integer[]>> getOrderingRules() {
-        return this.orderingRules;
+        return orderingRules;
     }
 
     public static void main(String[] args) throws IOException {

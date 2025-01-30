@@ -17,13 +17,13 @@ public class AntinodeCalculator {
     private final int numberOfAntinodes;
 
     public AntinodeCalculator() throws IOException {
-        this.antennaInformations = new InputFormatter();
-        this.numberOfAntinodes = calculateAntinodes();
+        antennaInformations = new InputFormatter();
+        numberOfAntinodes = calculateAntinodes();
     }
 
     private int calculateAntinodes() {
         int numberOfAntinodes = 0;
-        for (Map.Entry<Character, List<Integer[]>> entry : this.antennaInformations.getConvertedInput().entrySet()) {
+        for (Map.Entry<Character, List<Integer[]>> entry : antennaInformations.getConvertedInput().entrySet()) {
             List<Integer[]> list = entry.getValue();
 
             numberOfAntinodes += findAntinodesForThisList(list);
@@ -66,13 +66,13 @@ public class AntinodeCalculator {
         if (isInBounds(secondPosition) && !isAlreadyFound(secondPosition)) {
             validPositions++;
         }
-        this.foundLocations.add(firstPosition);
-        this.foundLocations.add(secondPosition);
+        foundLocations.add(firstPosition);
+        foundLocations.add(secondPosition);
         return validPositions;
     }
 
     private boolean isAlreadyFound(int[] position) {
-        for (int[] location : this.foundLocations) {
+        for (int[] location : foundLocations) {
             if (position[0] == location[0] && position[1] == location[1]) {
                 return true;
             }

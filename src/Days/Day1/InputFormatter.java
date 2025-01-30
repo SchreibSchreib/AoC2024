@@ -16,7 +16,7 @@ public class InputFormatter implements InputManipulatable<Integer[][]> {
     private int size;
 
     public InputFormatter() throws IOException {
-        this.input = readFile();
+        input = readFile();
         leftNumbers = new int[input.size()];
         rightNumbers = new int[input.size()];
         splitAndSortNumbers();
@@ -55,7 +55,7 @@ public class InputFormatter implements InputManipulatable<Integer[][]> {
 
     @Override
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     public static void main(String[] args) {

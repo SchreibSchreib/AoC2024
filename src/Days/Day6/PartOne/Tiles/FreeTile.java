@@ -10,12 +10,12 @@ public class FreeTile extends Tile {
 
     public FreeTile(int yIndex, int xIndex, char tileSymbol, boolean convertedTile) {
         super(yIndex,xIndex,tileSymbol);
-        this.isVisited = convertedTile;
+        isVisited = convertedTile;
     }
 
     public FreeTile(FreeTile freeTileToCopy) {
         super(freeTileToCopy.getYIndex(), freeTileToCopy.getXIndex(), freeTileToCopy.getTileSymbol());
-        this.isVisited = freeTileToCopy.isVisited;
+        isVisited = freeTileToCopy.isVisited;
     }
 
     @Override

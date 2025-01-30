@@ -16,9 +16,9 @@ class ExpressionExtractor {
     private final List<Integer[]> foundPermittedExpressions;
 
     public ExpressionExtractor(String regex) throws IOException {
-        this.manipulatedInput = new InputFormatter();
-        this.regularExpression = regex;
-        this.foundPermittedExpressions = findPermittedExpressions();
+        manipulatedInput = new InputFormatter();
+        regularExpression = regex;
+        foundPermittedExpressions = findPermittedExpressions();
     }
 
     private List<Integer[]> findPermittedExpressions() {
@@ -38,7 +38,7 @@ class ExpressionExtractor {
     }
 
     public List<Integer[]> getExpressions() {
-        return this.foundPermittedExpressions;
+        return foundPermittedExpressions;
     }
 
     public static void main(String[] args) throws IOException {

@@ -20,12 +20,12 @@ public class RouteCalculator {
 
 
     public RouteCalculator() throws IOException {
-        this.tileLoader = new TileLoader();
-        this.tileMap = tileLoader.getLoadedTiles();
-        this.playerTile = tileLoader.getPlayerTile();
-        this.currentPosY = playerTile.getYIndex();
-        this.currentPosX = playerTile.getXIndex();
-        this.walkedSteps = calculateRoute();
+        tileLoader = new TileLoader();
+        tileMap = tileLoader.getLoadedTiles();
+        playerTile = tileLoader.getPlayerTile();
+        currentPosY = playerTile.getYIndex();
+        currentPosX = playerTile.getXIndex();
+        walkedSteps = calculateRoute();
     }
 
     private int calculateRoute() {

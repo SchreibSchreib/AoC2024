@@ -9,8 +9,8 @@ public class Summarizer {
     private Long sumOfFile;
 
     public Summarizer() throws IOException {
-        this.fileToCalculate = new FileFragmenter().getCorrectFragmentedFile();
-        this.sumOfFile = calculate();
+        fileToCalculate = new FileFragmenter().getCorrectFragmentedFile();
+        sumOfFile = calculate();
     }
 
     private Long calculate() {

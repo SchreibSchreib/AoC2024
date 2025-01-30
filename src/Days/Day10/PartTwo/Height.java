@@ -10,7 +10,7 @@ public class Height {
     public Height(int height, int[] index) {
         this.height = height;
         this.index = index;
-        this.nextNumberToSearch = calculateNumber();
+        nextNumberToSearch = calculateNumber();
     }
 
     private int calculateNumber() {

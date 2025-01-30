@@ -10,18 +10,18 @@ public class PlayerTile extends Tile {
 
     public PlayerTile(int yIndex, int xIndex, char tileSymbol) {
         super(yIndex, xIndex, tileSymbol);
-        this.currentDirection = setCurrentDirection();
-        this.isVisited = true;
+        currentDirection = setCurrentDirection();
+        isVisited = true;
     }
 
     public PlayerTile(PlayerTile playerTileToCopy) {
         super(playerTileToCopy.getYIndex(), playerTileToCopy.getXIndex(), playerTileToCopy.getTileSymbol());
-        this.visitedTiles = playerTileToCopy.getVisitedTiles();
-        this.currentDirection = playerTileToCopy.getCurrentDirection();
+        visitedTiles = playerTileToCopy.getVisitedTiles();
+        currentDirection = playerTileToCopy.getCurrentDirection();
     }
 
     private Direction setCurrentDirection() {
-        return switch (this.tileSymbol) {
+        return switch (tileSymbol) {
             case '>' -> Direction.XPOSITIVE;
             case '<' -> Direction.XNEGATIVE;
             case 'v' -> Direction.YPOSITIVE;
@@ -30,7 +30,7 @@ public class PlayerTile extends Tile {
     }
 
     public Direction getCurrentDirection() {
-        return this.currentDirection;
+        return currentDirection;
     }
 
     @Override
@@ -44,22 +44,22 @@ public class PlayerTile extends Tile {
     }
 
     public void increaseVisitedTiles() {
-        this.visitedTiles++;
+        visitedTiles++;
     }
 
     public void rotateTileSymbol() {
         char[] directions = {'^', '>', 'v', '<'};
-        int indexNextDirection = new String(directions).indexOf(this.tileSymbol);
-        this.tileSymbol = directions[(indexNextDirection + 1) % directions.length];
-        this.currentDirection = setCurrentDirection();
+        int indexNextDirection = new String(directions).indexOf(tileSymbol);
+        tileSymbol = directions[(indexNextDirection + 1) % directions.length];
+        currentDirection = setCurrentDirection();
     }
 
     public void setCoordinates() {
-        switch (this.currentDirection) {
-            case XPOSITIVE -> this.xIndex++;
-            case XNEGATIVE -> this.xIndex--;
-            case YPOSITIVE -> this.yIndex++;
-            case YNEGATIVE -> this.yIndex--;
+        switch (currentDirection) {
+            case XPOSITIVE -> xIndex++;
+            case XNEGATIVE -> xIndex--;
+            case YPOSITIVE -> yIndex++;
+            case YNEGATIVE -> yIndex--;
         }
     }
 
@@ -72,6 +72,6 @@ public class PlayerTile extends Tile {
     }
 
     public int getVisitedTiles() {
-        return this.visitedTiles;
+        return visitedTiles;
     }
 }

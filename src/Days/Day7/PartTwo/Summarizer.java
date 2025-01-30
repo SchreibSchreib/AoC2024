@@ -9,8 +9,8 @@ public class Summarizer {
     private final Long result;
 
     public Summarizer() throws IOException {
-        this.expressionEvaluator = new ExpressionEvaluator().getFoundEquatations();
-        this.result = sumExpressions();
+        expressionEvaluator = new ExpressionEvaluator().getFoundEquatations();
+        result = sumExpressions();
     }
 
     private Long sumExpressions() {

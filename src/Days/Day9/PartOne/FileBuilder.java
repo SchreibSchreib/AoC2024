@@ -12,13 +12,13 @@ public class FileBuilder {
     private final List<Integer> correctOrderedFile;
 
     public FileBuilder() throws IOException {
-        this.loadedFile = new FileLoader();
-        this.correctOrderedFile = buildFile();
+        loadedFile = new FileLoader();
+        correctOrderedFile = buildFile();
     }
 
     private List<Integer> buildFile() {
-        Map<Integer, Integer[]> mappedNumbersWithLength = this.loadedFile.getMappedNumbersWithLength();
-        List<Integer[]> listedPositionsOfDots = this.loadedFile.getListedPositionsOfDots();
+        Map<Integer, Integer[]> mappedNumbersWithLength = loadedFile.getMappedNumbersWithLength();
+        List<Integer[]> listedPositionsOfDots = loadedFile.getListedPositionsOfDots();
 
         List<Integer> builtFile = build(mappedNumbersWithLength, listedPositionsOfDots);
 
@@ -84,7 +84,7 @@ public class FileBuilder {
     }
 
     public List<Integer> getCorrectOrderedFile() {
-        return this.correctOrderedFile;
+        return correctOrderedFile;
     }
 
     public static void main(String[] args) throws IOException {

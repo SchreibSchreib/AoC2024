@@ -8,8 +8,8 @@ public class Summarizer {
     private int sum;
 
     public Summarizer() throws IOException {
-        this.numbersToSumUp = new NumberExtractor().getListOfExtractedNumbers();
-        this.sum = sumNumbers();
+        numbersToSumUp = new NumberExtractor().getListOfExtractedNumbers();
+        sum = sumNumbers();
     }
 
     private int sumNumbers() {

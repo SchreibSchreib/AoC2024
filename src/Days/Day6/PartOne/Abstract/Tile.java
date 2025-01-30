@@ -12,23 +12,23 @@ public abstract class Tile {
         this.yIndex = yIndex;
         this.xIndex = xIndex;
         this.tileSymbol = tileSymbol;
-        this.numberOfTimesTheGuardStepsOnIt = 0;
+        numberOfTimesTheGuardStepsOnIt = 0;
     }
 
     public int getYIndex() {
-        return this.yIndex;
+        return yIndex;
     }
 
     public int getXIndex() {
-        return this.xIndex;
+        return xIndex;
     }
 
     public char getTileSymbol() {
-        return this.tileSymbol;
+        return tileSymbol;
     }
 
     public boolean isVisited() {
-        return this.isVisited;
+        return isVisited;
     }
 
     public void setTileSymbol(char tileSymbol) {
@@ -36,7 +36,7 @@ public abstract class Tile {
     }
 
     public void toggleVisitStatus() {
-        this.isVisited = !this.isVisited;
+        isVisited = !isVisited;
     }
 
     public abstract void process();
@@ -44,14 +44,14 @@ public abstract class Tile {
     public abstract Tile copy();
 
     public void increaseNumberOfTimesTheGuardStepsOnIt() {
-        this.numberOfTimesTheGuardStepsOnIt++;
+        numberOfTimesTheGuardStepsOnIt++;
     }
 
     public void decreaseNumberOfTimesTheGuardStepsOnIt() {
-        this.numberOfTimesTheGuardStepsOnIt--;
+        numberOfTimesTheGuardStepsOnIt--;
     }
 
     public int getNumberOfTimesTheGuardStepsOnIt() {
-        return this.numberOfTimesTheGuardStepsOnIt;
+        return numberOfTimesTheGuardStepsOnIt;
     }
 }

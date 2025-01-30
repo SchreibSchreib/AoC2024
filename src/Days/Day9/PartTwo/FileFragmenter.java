@@ -12,10 +12,10 @@ public class FileFragmenter {
     private List<Integer> fragmentedNumbers;
 
     public FileFragmenter() throws IOException {
-        this.fileLoader = new FileLoader();
-        this.mappedNumbers = this.fileLoader.getMappedNumbersWithLength();
-        this.mappedDots = this.fileLoader.getMappedPositionsOfDots();
-        this.fragmentedNumbers = loadFragmentedList();
+        fileLoader = new FileLoader();
+        mappedNumbers = fileLoader.getMappedNumbersWithLength();
+        mappedDots = fileLoader.getMappedPositionsOfDots();
+        fragmentedNumbers = loadFragmentedList();
     }
 
     private List<Integer> loadFragmentedList() {
@@ -24,12 +24,12 @@ public class FileFragmenter {
     }
 
     private Map<Integer, Integer[]> fragmentData() {
-        Map<Integer, Integer[]> fragmentedMap = new HashMap<>(this.mappedNumbers);
-        int numberIndex = (this.mappedNumbers.size() - 1) * 2;
+        Map<Integer, Integer[]> fragmentedMap = new HashMap<>(mappedNumbers);
+        int numberIndex = (mappedNumbers.size() - 1) * 2;
 
         for (; numberIndex >= 2; numberIndex -= 2) {
             for (int dotIndex = 1; dotIndex < numberIndex; dotIndex += 2) {
-                if (fragmentedMap.get(numberIndex)[1] <= this.mappedDots.get(dotIndex)[1]) {
+                if (fragmentedMap.get(numberIndex)[1] <= mappedDots.get(dotIndex)[1]) {
                     fragmentMap(fragmentedMap, dotIndex, numberIndex);
                     break;
                 }
@@ -45,8 +45,8 @@ public class FileFragmenter {
         } else {
             fragmentedMap.put(dotIndex, fragmentedMap.get(numberIndex));
         }
-        this.mappedDots.get(dotIndex)[1] -= fragmentedMap.get(numberIndex)[1];
-        this.mappedDots.get(numberIndex - 1)[1] += fragmentedMap.get(numberIndex)[1];
+        mappedDots.get(dotIndex)[1] -= fragmentedMap.get(numberIndex)[1];
+        mappedDots.get(numberIndex - 1)[1] += fragmentedMap.get(numberIndex)[1];
         fragmentedMap.remove(numberIndex);
     }
 
@@ -59,7 +59,7 @@ public class FileFragmenter {
     private List<Integer> loadList(Map<Integer, Integer[]> fragmentedMap) {
         List<Integer> data = new ArrayList<>();
 
-        for (int i = 0; i < this.fileLoader.getHighestIndex(); i++) {
+        for (int i = 0; i < fileLoader.getHighestIndex(); i++) {
             if (fragmentedMap.containsKey(i)) {
                 for (int j = 0; j < fragmentedMap.get(i).length; j += 2) {
                     for (int k = 0; k < fragmentedMap.get(i)[j + 1]; k++) {
@@ -78,7 +78,7 @@ public class FileFragmenter {
     }
 
     public List<Integer> getCorrectFragmentedFile() {
-        return this.fragmentedNumbers;
+        return fragmentedNumbers;
     }
 
     public static void main(String[] args) throws IOException {

@@ -15,7 +15,7 @@ public class FileLoader {
     private final List<Integer[]> listedPositionsOfDots = new ArrayList<>();
 
     public FileLoader() throws IOException {
-        this.manipulatedInput = new InputFormatter().getConvertedInput();
+        manipulatedInput = new InputFormatter().getConvertedInput();
         loadLists();
     }
 

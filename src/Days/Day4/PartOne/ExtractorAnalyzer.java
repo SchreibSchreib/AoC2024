@@ -18,11 +18,11 @@ public class ExtractorAnalyzer {
     private final int lastY;
 
     public ExtractorAnalyzer() throws IOException {
-        this.extractor = new IndexExtractor();
-        this.lastX = extractor.getLengthX();
-        this.lastY = extractor.getLengthY();
-        this.analyzedFunctionalPhrases = analyzeExtractedData();
-        this.values = analyzedFunctionalPhrases.values();
+        extractor = new IndexExtractor();
+        lastX = extractor.getLengthX();
+        lastY = extractor.getLengthY();
+        analyzedFunctionalPhrases = analyzeExtractedData();
+        values = analyzedFunctionalPhrases.values();
     }
 
     private Map<Integer[], Integer> analyzeExtractedData() {

@@ -17,12 +17,12 @@ public class TileLoader {
 
     public TileLoader() throws IOException {
         InputFormatter input = new InputFormatter();
-        this.loadedTiles = convertCharsToTiles(input.getConvertedInput());
-        this.playerTile = findPlayer();
+        loadedTiles = convertCharsToTiles(input.getConvertedInput());
+        playerTile = findPlayer();
     }
 
     private PlayerTile findPlayer() {
-        for (Tile[] tiles : this.loadedTiles) {
+        for (Tile[] tiles : loadedTiles) {
             for (Tile tile : tiles) {
                 if (tile instanceof PlayerTile) {
                     return (PlayerTile) tile;
@@ -53,11 +53,11 @@ public class TileLoader {
     }
 
     public List<Tile[]> getLoadedTiles() {
-        return this.loadedTiles;
+        return loadedTiles;
     }
 
     public PlayerTile getPlayerTile() {
-        return this.playerTile;
+        return playerTile;
     }
 
     public static void main(String[] args) throws IOException {

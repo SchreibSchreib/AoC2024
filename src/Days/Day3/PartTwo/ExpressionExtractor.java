@@ -18,10 +18,10 @@ class ExpressionExtractor {
     private boolean isLastDont;
 
     public ExpressionExtractor(String regex) throws IOException {
-        this.manipulatedInput = new InputFormatter();
-        this.regularExpression = regex;
-        this.disabledAreas = locateDisabledAreas();
-        this.foundPermittedExpressions = findPermittedExpressions();
+        manipulatedInput = new InputFormatter();
+        regularExpression = regex;
+        disabledAreas = locateDisabledAreas();
+        foundPermittedExpressions = findPermittedExpressions();
     }
 
     private Map<Integer, Integer> locateDisabledAreas() {
@@ -59,7 +59,7 @@ class ExpressionExtractor {
                 return false;
             }
         }
-        this.isLastDont = true;
+        isLastDont = true;
         return true;
     }
 
@@ -124,7 +124,7 @@ class ExpressionExtractor {
     }
 
     public List<Integer[]> getExpressions() {
-        return this.foundPermittedExpressions;
+        return foundPermittedExpressions;
     }
 
     public static void main(String[] args) throws IOException {

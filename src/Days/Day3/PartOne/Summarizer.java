@@ -9,20 +9,20 @@ public class Summarizer {
     private int sum;
 
     public Summarizer() throws IOException {
-        this.stringPurifier = new ExpressionExtractor("mul\\((\\d{1,3}),(\\d{1,3})\\)");
-        this.sum = calculate();
+        stringPurifier = new ExpressionExtractor("mul\\((\\d{1,3}),(\\d{1,3})\\)");
+        sum = calculate();
     }
 
     private int calculate() {
         int sum = 0;
-        for (Integer[] expression : this.stringPurifier.getExpressions()) {
+        for (Integer[] expression : stringPurifier.getExpressions()) {
             sum += expression[0] * expression[1];
         }
         return sum;
     }
 
     public int getSum() {
-        return this.sum;
+        return sum;
     }
 
     public static void main(String[] args) throws IOException {

@@ -14,8 +14,8 @@ public class TopographicMapConverter {
 
 
     public TopographicMapConverter() throws IOException {
-        this.mapInformation = new InputFormatter().getConvertedInput();
-        this.topographicMap = convertToHeightObjects();
+        mapInformation = new InputFormatter().getConvertedInput();
+        topographicMap = convertToHeightObjects();
     }
 
     private List<Height[]> convertToHeightObjects() {
@@ -36,11 +36,11 @@ public class TopographicMapConverter {
     }
 
     public List<Height[]> getTopographicMap() {
-        return this.topographicMap;
+        return topographicMap;
     }
 
     public List<Height> getStartingPoints() {
-        return this.foundStartingPoints;
+        return foundStartingPoints;
     }
 
     public static void main(String[] args) throws IOException {

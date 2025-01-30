@@ -8,8 +8,8 @@ public class Summarizer {
     private ExtractorAnalyzer analyzer;
 
     public Summarizer() throws IOException {
-        this.analyzer = new ExtractorAnalyzer();
-        this.result = summazize(this.analyzer.getValues());
+        analyzer = new ExtractorAnalyzer();
+        result = summazize(analyzer.getValues());
     }
 
     private int summazize(Collection<Integer> values) {

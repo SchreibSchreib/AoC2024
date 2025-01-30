@@ -11,16 +11,16 @@ public class HikingTrailEvaluator {
 
     public HikingTrailEvaluator() throws IOException {
         TopographicMapConverter topographicMapConverter = new TopographicMapConverter();
-        this.mapInformation = topographicMapConverter.getTopographicMap();
-        this.startingPoints = topographicMapConverter.getStartingPoints();
-        this.foundAvailableHikingRoutes = evaluateRoutes();
+        mapInformation = topographicMapConverter.getTopographicMap();
+        startingPoints = topographicMapConverter.getStartingPoints();
+        foundAvailableHikingRoutes = evaluateRoutes();
     }
 
     private int evaluateRoutes() {
         int hikingRoutes = 0;
 
         for (Height startingPoint : startingPoints) {
-            RouteAnalyzer routeAnalyzer = new RouteAnalyzer(startingPoint, this.mapInformation);
+            RouteAnalyzer routeAnalyzer = new RouteAnalyzer(startingPoint, mapInformation);
             hikingRoutes += routeAnalyzer.getNumberOfWorkingPaths();
             resetFields();
         }

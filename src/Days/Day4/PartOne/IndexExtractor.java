@@ -15,10 +15,10 @@ class IndexExtractor {
     private final List<List<Integer[]>> foundIndices;
 
     public IndexExtractor() throws IOException {
-        this.manipulatedInput = new InputFormatter();
-        this.lengthY = manipulatedInput.getSize();
-        this.lengthX = getLengthOfArrays();
-        this.foundIndices = findPermittedExpressions();
+        manipulatedInput = new InputFormatter();
+        lengthY = manipulatedInput.getSize();
+        lengthX = getLengthOfArrays();
+        foundIndices = findPermittedExpressions();
     }
 
     private int getLengthOfArrays() {
@@ -64,15 +64,15 @@ class IndexExtractor {
     }
 
     public List<List<Integer[]>> getExpressions() {
-        return this.foundIndices;
+        return foundIndices;
     }
 
     public int getLengthY() {
-        return this.lengthY;
+        return lengthY;
     }
 
     public int getLengthX() {
-        return this.lengthX;
+        return lengthX;
     }
 
     public static void main(String[] args) throws IOException {

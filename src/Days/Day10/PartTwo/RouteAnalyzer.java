@@ -15,8 +15,8 @@ public class RouteAnalyzer {
     public RouteAnalyzer(Height currentHeight, List<Height[]> mapInformation) {
         this.currentHeight = currentHeight;
         this.mapInformation = mapInformation;
-        this.boundsY = new int[]{0, mapInformation.size()};
-        this.boundsX = new int[]{0, mapInformation.getFirst().length};
+        boundsY = new int[]{0, mapInformation.size()};
+        boundsX = new int[]{0, mapInformation.getFirst().length};
         processRoutes();
 
     }
@@ -24,15 +24,15 @@ public class RouteAnalyzer {
     private void processRoutes() {
         analyzeRoute();
         while (!crossRoads.isEmpty()) {
-            RouteAnalyzer newRoute = new RouteAnalyzer(crossRoads.pop(), this.mapInformation);
+            RouteAnalyzer newRoute = new RouteAnalyzer(crossRoads.pop(), mapInformation);
             numberOfWorkingPaths += newRoute.getNumberOfWorkingPaths();
         }
     }
 
     private void analyzeRoute() {
         while (true) {
-            if (this.currentHeight.getHeight() == 9) {
-                this.numberOfWorkingPaths++;
+            if (currentHeight.getHeight() == 9) {
+                numberOfWorkingPaths++;
                 break;
             }
 
@@ -48,11 +48,11 @@ public class RouteAnalyzer {
             Height nextHeight = foundFields.getFirst();
 
             if (nextHeight.getHeight() == 9) {
-                this.numberOfWorkingPaths++;
+                numberOfWorkingPaths++;
                 break;
             }
 
-            this.currentHeight = nextHeight;
+            currentHeight = nextHeight;
         }
     }
 
@@ -65,21 +65,21 @@ public class RouteAnalyzer {
         List<Height> foundFields = new ArrayList<>();
 
         for (int y = -1; y <= 1; y += 2) {
-            int yIndex = this.currentHeight.getIndex()[0] + y;
-            int xIndex = this.currentHeight.getIndex()[1];
+            int yIndex = currentHeight.getIndex()[0] + y;
+            int xIndex = currentHeight.getIndex()[1];
             if (isIndexInBoundsY(yIndex)) {
-                if (this.mapInformation.get(yIndex)[xIndex].getHeight() == this.currentHeight.getNextHeightToSearch()) {
-                    foundFields.add(this.mapInformation.get(yIndex)[xIndex]);
+                if (mapInformation.get(yIndex)[xIndex].getHeight() == currentHeight.getNextHeightToSearch()) {
+                    foundFields.add(mapInformation.get(yIndex)[xIndex]);
                 }
             }
         }
 
         for (int x = -1; x <= 1; x += 2) {
-            int yIndex = this.currentHeight.getIndex()[0];
-            int xIndex = this.currentHeight.getIndex()[1] + x;
+            int yIndex = currentHeight.getIndex()[0];
+            int xIndex = currentHeight.getIndex()[1] + x;
             if (isIndexInBoundsX(xIndex)) {
-                if (this.mapInformation.get(yIndex)[xIndex].getHeight() == this.currentHeight.getNextHeightToSearch()) {
-                    foundFields.add(this.mapInformation.get(yIndex)[xIndex]);
+                if (mapInformation.get(yIndex)[xIndex].getHeight() == currentHeight.getNextHeightToSearch()) {
+                    foundFields.add(mapInformation.get(yIndex)[xIndex]);
                 }
             }
         }
@@ -87,14 +87,14 @@ public class RouteAnalyzer {
     }
 
     private boolean isIndexInBoundsX(int xIndex) {
-        return xIndex >= this.boundsX[0] && xIndex < this.boundsX[1];
+        return xIndex >= boundsX[0] && xIndex < boundsX[1];
     }
 
     private boolean isIndexInBoundsY(int yIndex) {
-        return yIndex >= this.boundsY[0] && yIndex < this.boundsY[1];
+        return yIndex >= boundsY[0] && yIndex < boundsY[1];
     }
 
     public int getNumberOfWorkingPaths() {
-        return this.numberOfWorkingPaths;
+        return numberOfWorkingPaths;
     }
 }

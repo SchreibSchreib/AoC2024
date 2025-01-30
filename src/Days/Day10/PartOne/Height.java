@@ -10,7 +10,7 @@ public class Height {
     public Height(int height, int[] index) {
         this.height = height;
         this.index = index;
-        this.nextNumberToSearch = calculateNumber();
+        nextNumberToSearch = calculateNumber();
     }
 
     private int calculateNumber() {
@@ -34,10 +34,10 @@ public class Height {
     }
 
     public void setSteppedOn() {
-        this.alreadySteppedOn = !alreadySteppedOn;
+        alreadySteppedOn = !alreadySteppedOn;
     }
 
     public void resetSteppedOn() {
-        this.alreadySteppedOn = false;
+        alreadySteppedOn = false;
     }
 }

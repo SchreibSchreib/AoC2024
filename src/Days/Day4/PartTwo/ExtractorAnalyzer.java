@@ -19,12 +19,12 @@ public class ExtractorAnalyzer {
     private final int lastY;
 
     public ExtractorAnalyzer() throws IOException {
-        this.extractor = new IndexExtractor();
-        this.lastX = extractor.getLengthX() - 1;
-        this.lastY = extractor.getLengthY() - 1;
-        this.coordinatesToCheck = getCoordinates();
-        this.analyzedFunctionalPhrases = analyzeExtractedData();
-        this.values = analyzedFunctionalPhrases.values();
+        extractor = new IndexExtractor();
+        lastX = extractor.getLengthX() - 1;
+        lastY = extractor.getLengthY() - 1;
+        coordinatesToCheck = getCoordinates();
+        analyzedFunctionalPhrases = analyzeExtractedData();
+        values = analyzedFunctionalPhrases.values();
     }
 
     private Map<Integer, Integer[]> getCoordinates() {

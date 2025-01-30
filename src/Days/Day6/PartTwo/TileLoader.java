@@ -17,20 +17,20 @@ public class TileLoader {
 
     public TileLoader() throws IOException {
         InputFormatter input = new InputFormatter();
-        this.loadedTiles = convertCharsToTiles(input.getConvertedInput());
-        this.playerTile = findPlayer();
+        loadedTiles = convertCharsToTiles(input.getConvertedInput());
+        playerTile = findPlayer();
         replacePlayerWithFreeTile();
     }
 
     private void replacePlayerWithFreeTile() {
-        int playerY = this.playerTile.getYIndex();
-        int playerX = this.playerTile.getXIndex();
-        this.loadedTiles.get(playerY)[playerX] = new FreeTile(playerY, playerX, '.', true);
+        int playerY = playerTile.getYIndex();
+        int playerX = playerTile.getXIndex();
+        loadedTiles.get(playerY)[playerX] = new FreeTile(playerY, playerX, '.', true);
     }
 
 
     private PlayerTile findPlayer() {
-        for (Tile[] tiles : this.loadedTiles) {
+        for (Tile[] tiles : loadedTiles) {
             for (Tile tile : tiles) {
                 if (tile instanceof PlayerTile) {
                     return (PlayerTile) tile;
@@ -61,11 +61,11 @@ public class TileLoader {
     }
 
     public List<Tile[]> getLoadedTiles() {
-        return this.loadedTiles;
+        return loadedTiles;
     }
 
     public PlayerTile getPlayerTile() {
-        return this.playerTile;
+        return playerTile;
     }
 
     public static void main(String[] args) throws IOException {

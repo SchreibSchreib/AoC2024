@@ -21,17 +21,17 @@ public class ObstaclePlacer {
         placeObstacle(nextFieldY, nextFieldX);
         this.copiedPlayer = copiedPlayer;
         if (!wasAlreadyHere) {
-            this.causesObstacleLoop = findLoop(nextFieldY, nextFieldX);
+            causesObstacleLoop = findLoop(nextFieldY, nextFieldX);
         }
     }
 
     private void placeObstacle(int nextFieldY, int nextFieldX) {
         Tile nextTile = copiedMap.get(nextFieldY)[nextFieldX];
         if (!nextTile.isVisited()) {
-            this.copiedMap.get(nextFieldY)[nextFieldX] = new ObstacleTile(nextFieldY, nextFieldX, '#');
+            copiedMap.get(nextFieldY)[nextFieldX] = new ObstacleTile(nextFieldY, nextFieldX, '#');
             return;
         }
-        this.wasAlreadyHere = true;
+        wasAlreadyHere = true;
     }
 
     private boolean findLoop(int nextFieldY, int nextFieldX) {
@@ -70,7 +70,7 @@ public class ObstaclePlacer {
         }
 
         if (nextTile.getNumberOfTimesTheGuardStepsOnIt() > 4) {
-            this.causesObstacleLoop = true;
+            causesObstacleLoop = true;
             printMap();
         }
 

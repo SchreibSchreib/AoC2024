@@ -15,8 +15,8 @@ public class FileLoader {
     private final int highestIndex;
 
     public FileLoader() throws IOException {
-        this.manipulatedInput = new InputFormatter().getConvertedInput();
-        this.highestIndex = manipulatedInput.size();
+        manipulatedInput = new InputFormatter().getConvertedInput();
+        highestIndex = manipulatedInput.size();
         loadLists();
     }
 

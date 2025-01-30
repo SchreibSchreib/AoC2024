@@ -15,13 +15,13 @@ public class InputFormatter implements InputManipulatable<List<Long[]>> {
     private int size;
 
     public InputFormatter() throws IOException {
-        this.input = readFile();
-        this.formattedInput = handleInput();
+        input = readFile();
+        formattedInput = handleInput();
     }
 
     private List<Long[]> handleInput() {
         List<Long[]> inputAsCharArray = new ArrayList<>();
-        for (String line : this.input) {
+        for (String line : input) {
             inputAsCharArray.add(splitLine(line));
         }
         return inputAsCharArray;
@@ -48,12 +48,12 @@ public class InputFormatter implements InputManipulatable<List<Long[]>> {
 
     @Override
     public List<Long[]> getConvertedInput() {
-        return this.formattedInput;
+        return formattedInput;
     }
 
     @Override
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     public static void main(String[] args) {

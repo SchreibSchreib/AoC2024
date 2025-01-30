@@ -12,7 +12,7 @@ public class InputFormatter implements InputManipulatable<String> {
     private int size;
 
     public InputFormatter() throws IOException {
-        this.input = readFile();
+        input = readFile();
     }
 
     private String readFile() throws IOException {
@@ -23,7 +23,7 @@ public class InputFormatter implements InputManipulatable<String> {
 
     @Override
     public String getConvertedInput() {
-        return this.input;
+        return input;
     }
 
     private void setSize(int size) {
@@ -32,7 +32,7 @@ public class InputFormatter implements InputManipulatable<String> {
 
     @Override
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     public static void main(String[] args) {

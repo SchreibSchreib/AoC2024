@@ -17,18 +17,18 @@ public class InputFormatter implements InputManipulatable<Map<Character, List<In
     private int size;
 
     public InputFormatter() throws IOException {
-        this.input = readFile();
-        this.formattedInput = handleInput();
+        input = readFile();
+        formattedInput = handleInput();
     }
 
     private Map<Character, List<Integer[]>> handleInput() {
         Map<Character, List<Integer[]>> mappedInput = new HashMap<>();
-        for (int y = 0; y < this.input.size(); y++) {
-            for (int x = 0; x < this.input.get(y).length(); x++) {
-                if (this.input.get(y).charAt(x) == '.') {
+        for (int y = 0; y < input.size(); y++) {
+            for (int x = 0; x < input.get(y).length(); x++) {
+                if (input.get(y).charAt(x) == '.') {
                     continue;
                 }
-                char foundChar = this.input.get(y).charAt(x);
+                char foundChar = input.get(y).charAt(x);
                 if (mappedInput.containsKey(foundChar)) {
                     mappedInput.get(foundChar).add(new Integer[]{y, x});
                     continue;
@@ -55,12 +55,12 @@ public class InputFormatter implements InputManipulatable<Map<Character, List<In
 
     @Override
     public Map<Character, List<Integer[]>> getConvertedInput() {
-        return this.formattedInput;
+        return formattedInput;
     }
 
     @Override
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     public static void main(String[] args) {

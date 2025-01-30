@@ -10,8 +10,8 @@ public class Summarizer {
     private Long sumOfFile;
 
     public Summarizer() throws IOException {
-        this.fileToCalculate = new FileBuilder().getCorrectOrderedFile();
-        this.sumOfFile = calculate();
+        fileToCalculate = new FileBuilder().getCorrectOrderedFile();
+        sumOfFile = calculate();
     }
 
     private Long calculate() {

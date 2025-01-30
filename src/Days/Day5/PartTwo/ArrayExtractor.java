@@ -13,9 +13,9 @@ public class ArrayExtractor {
     private final Map<Integer, List<Integer[]>> orderingRules;
 
     public ArrayExtractor() throws IOException {
-        this.inputMapper = new InputMapper();
-        this.orderingRules = inputMapper.getOrderingRules();
-        this.listOfIncorrectlyOrderedUpdates = extractNumbers();
+        inputMapper = new InputMapper();
+        orderingRules = inputMapper.getOrderingRules();
+        listOfIncorrectlyOrderedUpdates = extractNumbers();
     }
 
     private List<Integer[]> extractNumbers() {
@@ -57,11 +57,11 @@ public class ArrayExtractor {
     }
 
     public List<Integer[]> getListOfIncorrectlyOrderedUpdates() {
-        return this.listOfIncorrectlyOrderedUpdates;
+        return listOfIncorrectlyOrderedUpdates;
     }
 
     public Map<Integer, List<Integer[]>> getOrderingRules() {
-        return this.orderingRules;
+        return orderingRules;
     }
 
     public static void main(String[] args) throws IOException {

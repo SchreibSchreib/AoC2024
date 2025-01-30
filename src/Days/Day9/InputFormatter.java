@@ -15,14 +15,14 @@ public class InputFormatter implements InputManipulatable<List<Integer>> {
     private int size;
 
     public InputFormatter() throws IOException {
-        this.input = readFile();
-        this.formattedInput = handleInput();
+        input = readFile();
+        formattedInput = handleInput();
     }
 
     private List<Integer> handleInput() {
-        List<Integer> inputAsIntegerList = new ArrayList<>(this.input.getFirst().length());
+        List<Integer> inputAsIntegerList = new ArrayList<>(input.getFirst().length());
 
-        for (char c : this.input.getFirst().toCharArray()) {
+        for (char c : input.getFirst().toCharArray()) {
             inputAsIntegerList.add(Integer.parseInt(String.valueOf(c)));
         }
 
@@ -41,12 +41,12 @@ public class InputFormatter implements InputManipulatable<List<Integer>> {
 
     @Override
     public List<Integer> getConvertedInput() {
-        return this.formattedInput;
+        return formattedInput;
     }
 
     @Override
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     public static void main(String[] args) {

@@ -10,10 +10,10 @@ public class UpdateRearranger {
     private final List<Integer[]> rearrangedUpdates;
 
     public UpdateRearranger() throws IOException {
-        this.arrayExtractor = new ArrayExtractor();
-        this.orderingRules = arrayExtractor.getOrderingRules();
-        this.wrongUpdates = arrayExtractor.getListOfIncorrectlyOrderedUpdates();
-        this.rearrangedUpdates = loadRearrangedUpdates();
+        arrayExtractor = new ArrayExtractor();
+        orderingRules = arrayExtractor.getOrderingRules();
+        wrongUpdates = arrayExtractor.getListOfIncorrectlyOrderedUpdates();
+        rearrangedUpdates = loadRearrangedUpdates();
     }
 
     private List<Integer[]> loadRearrangedUpdates() throws IOException {
@@ -56,11 +56,11 @@ public class UpdateRearranger {
     }
 
     public List<Integer[]> getRearrangedUpdates() {
-        return this.rearrangedUpdates;
+        return rearrangedUpdates;
     }
 
     public Map<Integer, List<Integer[]>> getOrderingRules() {
-        return this.orderingRules;
+        return orderingRules;
     }
 
     public static void main(String[] args) throws IOException {

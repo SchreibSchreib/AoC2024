@@ -11,8 +11,8 @@ public class DistanceCalculatorPartOne {
     private int distance;
 
     public DistanceCalculatorPartOne() throws IOException {
-        this.manipulatedInput = new InputFormatter();
-        this.distance = calculateDistance(this.manipulatedInput.getConvertedInput());
+        manipulatedInput = new InputFormatter();
+        distance = calculateDistance(manipulatedInput.getConvertedInput());
     }
 
     private int calculateDistance(Integer[][] input) {
@@ -29,7 +29,7 @@ public class DistanceCalculatorPartOne {
     }
 
     public int getDistance() {
-        return this.distance;
+        return distance;
     }
 
     public static void main(String[] args) throws IOException {

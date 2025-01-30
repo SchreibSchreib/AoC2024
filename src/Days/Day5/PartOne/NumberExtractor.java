@@ -12,8 +12,8 @@ public class NumberExtractor {
     private final List<Integer> listOfExtractedNumbers;
 
     public NumberExtractor() throws IOException {
-        this.inputMapper = new InputMapper();
-        this.listOfExtractedNumbers = extractNumbers();
+        inputMapper = new InputMapper();
+        listOfExtractedNumbers = extractNumbers();
     }
 
     private List<Integer> extractNumbers() {

@@ -14,8 +14,8 @@ public class ExpressionEvaluator {
     private final List<Long> foundEquatations;
 
     public ExpressionEvaluator() throws IOException {
-        this.input = new InputFormatter();
-        this.foundEquatations = evaluateExpression(input.getConvertedInput());
+        input = new InputFormatter();
+        foundEquatations = evaluateExpression(input.getConvertedInput());
     }
 
     private List<Long> evaluateExpression(List<Long[]> convertedInput) {
@@ -65,7 +65,7 @@ public class ExpressionEvaluator {
     }
 
     public List<Long> getFoundEquatations() {
-        return this.foundEquatations;
+        return foundEquatations;
     }
 
     public static void main(String[] args) throws IOException {
