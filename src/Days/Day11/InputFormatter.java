@@ -29,7 +29,7 @@ public class InputFormatter implements InputManipulatable<List<Double>> {
     }
 
     private String readFile() throws IOException {
-        return Files.readString(Paths.get("src/Days/Day11/TestInput.txt"));
+        return Files.readString(Paths.get("src/Days/Day11/Input.txt"));
     }
 
     @Override
