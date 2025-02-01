@@ -12,7 +12,7 @@ public class StoneRuleApplier {
     private final Map<Double, Double[]> ruleApplier = new HashMap<>();
     private Map<Double, Double> mappedStones;
     private long numberOfStones;
-    private final int numberOfBlinks = 25;
+    private final int numberOfBlinks = 500;
     private final int multiplier = 2024;
 
     public StoneRuleApplier() throws IOException {
@@ -52,26 +52,29 @@ public class StoneRuleApplier {
         Map<Double, Double> newRules = new HashMap<>();
 
         for (Map.Entry<Double, Double> entry : mappedStones.entrySet()) {
-            if (ruleApplier.containsKey(entry.getKey())) {
-                for (Double stone : ruleApplier.get(entry.getKey())) {
-                    if (mappedStones.containsKey(stone)) {
-                        newRules.put(stone, mappedStones.get(stone) + entry.getValue());
-                    }
-                    else {
-                        newRules.put(stone, 1.0);
-                    }
-                }
-            } else {
-                applyRules(entry.getKey());
-                for (Double stone : ruleApplier.get(entry.getKey())) {
-                    if (mappedStones.containsKey(stone)){
-                        newRules.put(stone, mappedStones.get(stone) + entry.getValue());
-                    }
-                    newRules.put(stone, 1.0);
-                }
+            double keyForMappedStone = entry.getKey();
+
+            if (!ruleApplier.containsKey(entry.getKey())) {
+                applyRules(keyForMappedStone);
             }
+
+            calculateStoneCollection(ruleApplier, newRules, keyForMappedStone, mappedStones);
         }
         return newRules;
+    }
+
+    private void calculateStoneCollection(Map<Double, Double[]> ruleApplier, Map<Double, Double> newRules, double keyForMappedStone, Map<Double, Double> mappedStones) {
+        Double[] stoneResultAfterCalculation = ruleApplier.get(keyForMappedStone);
+
+        for (Double stone : stoneResultAfterCalculation) {
+            if (newRules.containsKey(stone)) {
+                newRules.put(stone, newRules.get(stone) + mappedStones.getOrDefault(keyForMappedStone, 1.0));
+            } else {
+                newRules.put(stone, mappedStones.getOrDefault(keyForMappedStone, 1.0));
+            }
+        }
+
+        return;
     }
 
     private void applyRules(double stone) {
@@ -107,20 +110,6 @@ public class StoneRuleApplier {
 
     public static void main(String[] args) throws IOException {
         StoneRuleApplier testApplier = new StoneRuleApplier();
-        //Works fine for 25 but bruteforce won´t work for higher number of blinks
-        //maybe look for a pattern that every number will take at some point (hot guess: look at the 0 and check the behaviour)
-        //0
-        //1
-        //2024
-        //20 24
-        //2 0 2 4
-        //4048 1 4048 8096
-        //40 48 2024 40 48 8096
-        //4 0 4 8 20 24 4 8 80 96
-        //8096 1 8096 16192 2 0 2 4 8 8 0 9 6
-        //80 96 2024 80 96 32772608 4048 1 4048 16192 16192 18216 12144
-
-        //Ergebnis hoch 3 = zu hohes ergebnis
-
+        //240954878211138
     }
 }
