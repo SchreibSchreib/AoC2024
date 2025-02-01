@@ -12,7 +12,7 @@ public class StoneRuleApplier {
     private final Map<Double, Double[]> ruleApplier = new HashMap<>();
     private Map<Double, Double> mappedStones;
     private long numberOfStones;
-    private final int numberOfBlinks = 500;
+    private final int numberOfBlinks = 75;
     private final int multiplier = 2024;
 
     public StoneRuleApplier() throws IOException {
