@@ -20,6 +20,7 @@ public class GardenPlotMapBuilder {
             }
             map.add(gardenPlot);
         }
+        return map;
     }
 
     public List<GardenPlot[]> getGardenPlotMap() {

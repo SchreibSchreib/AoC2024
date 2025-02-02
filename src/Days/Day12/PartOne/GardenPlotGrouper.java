@@ -12,7 +12,7 @@ public class GardenPlotGrouper {
 
     private final InputManipulatable<List<char[]>> inputManipulatable;
     private final List<GardenPlot[]> convertedInput;
-    private final List<GardenPlot[]> groupedGardenPlots;
+    private final List<GardenPlot[]> groupedGardenPlots = new ArrayList<>();
     private final int[] boundsY;
     private final int[] boundsX;
 
@@ -21,26 +21,18 @@ public class GardenPlotGrouper {
         convertedInput = new GardenPlotMapBuilder(inputManipulatable.getConvertedInput()).getGardenPlotMap();
         boundsY = new int[]{0, convertedInput.size()};
         boundsX = new int[]{0, convertedInput.getFirst().length};
-        groupedGardenPlots = groupInput();
+        findAllGroups();
 
     }
 
-    private List<GardenPlot[]> groupInput() {
-        List<GardenPlot[]> listOfGroupedGardenPlots = new ArrayList<>(inputManipulatable.getSize());
 
-        for (int yIndex = 0; yIndex < convertedInput.size(); yIndex++) {
-            listOfGroupedGardenPlots.add(findNewGroup(yIndex));
-        }
-
-    }
-
-    private GardenPlot[] findNewGroup(int yIndex) {
+    private void findAllGroups() {
         for (GardenPlot[] gardenPlots : convertedInput) {
             for (GardenPlot gardenPlot : gardenPlots) {
                 if (gardenPlot.isAlreadyInGroup()) {
                     continue;
                 }
-                GardenPlot[] foundGroup = searchAlgorithm(gardenPlot);
+                groupedGardenPlots.add(searchAlgorithm(gardenPlot));
             }
         }
     }
@@ -49,22 +41,47 @@ public class GardenPlotGrouper {
         List<GardenPlot> gardenPlots = new ArrayList<>();
         ArrayDeque<GardenPlot> plotStack = new ArrayDeque<>();
         plotStack.push(gardenPlot);
+        gardenPlot.setAlreadyInGroup();
 
         while (!plotStack.isEmpty()) {
-            int[] index = gardenPlot.getCoordinates();
             GardenPlot plot = plotStack.pop();
-            plot.setAlreadyInGroup();
+            int[] index = plot.getCoordinates();
             gardenPlots.add(plot);
 
             searchPattern(plotStack, index, plot);
         }
+        return gardenPlots.toArray(new GardenPlot[0]);
     }
 
     private void searchPattern(ArrayDeque<GardenPlot> plotStack, int[] index, GardenPlot gardenPlot) {
+        // insert sidenumber here and let it be calculated with the search pattern
+        lookForYCoordinates(plotStack, index, gardenPlot);
+        lookForXCoordinates(plotStack, index, gardenPlot);
+
+    }
+
+    private void lookForXCoordinates(ArrayDeque<GardenPlot> plotStack, int[] index, GardenPlot gardenPlot) {
+        for (int xIndex = index[1] - 1; xIndex <= index[1] + 1; xIndex += 2) {
+            if (isIndexInBoundsX(xIndex)) {
+                GardenPlot nextPlot = convertedInput.get(index[0])[xIndex];
+                if (nextPlot.getPlotSymbol() == gardenPlot.getPlotSymbol()
+                        && !nextPlot.isAlreadyInGroup()) {
+                    nextPlot.setAlreadyInGroup();
+                    plotStack.push(nextPlot);
+                }
+            }
+        }
+    }
+
+    private void lookForYCoordinates(ArrayDeque<GardenPlot> plotStack, int[] index, GardenPlot gardenPlot) {
         for (int yIndex = index[0] - 1; yIndex <= index[0] + 1; yIndex += 2) {
-            if (convertedInput.get(yIndex)[index[1]].getPlotSymbol() == gardenPlot.getPlotSymbol()
-                    && !convertedInput.get(yIndex)[index[1]].isAlreadyInGroup()) {
-                plotStack.push(convertedInput.get(yIndex)[index[1]]);
+            if (isIndexInBoundsY(yIndex)) {
+                GardenPlot nextPlot = convertedInput.get(yIndex)[index[1]];
+                if (nextPlot.getPlotSymbol() == gardenPlot.getPlotSymbol()
+                        && !nextPlot.isAlreadyInGroup()) {
+                    nextPlot.setAlreadyInGroup();
+                    plotStack.push(nextPlot);
+                }
             }
         }
     }
@@ -75,5 +92,10 @@ public class GardenPlotGrouper {
 
     private boolean isIndexInBoundsY(int yIndex) {
         return yIndex >= boundsY[0] && yIndex < boundsY[1];
+    }
+
+    public static void main(String[] args) throws IOException {
+        GardenPlotGrouper testGrouper = new GardenPlotGrouper();
+
     }
 }
