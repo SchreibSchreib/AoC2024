@@ -2,7 +2,7 @@ package Days.Day12.PartOne;
 
 public class GardenPlot {
 
-    private int sides;
+    private int sides = 4;
     private final int[] coordinates;
     private final char plotSymbol;
     private boolean isAlreadyInGroup = false;
@@ -12,11 +12,11 @@ public class GardenPlot {
         coordinates = new int[]{yCoordinate, xCoordinate};
     }
 
-    public void setSides(int sides) {
-        this.sides = sides;
+    public void calculateSides(int sides) {
+        this.sides += sides;
     }
 
-    public int getSides() {
+    public int getPerimeter() {
         return sides;
     }
 

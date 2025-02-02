@@ -54,7 +54,6 @@ public class GardenPlotGrouper {
     }
 
     private void searchPattern(ArrayDeque<GardenPlot> plotStack, int[] index, GardenPlot gardenPlot) {
-        // insert sidenumber here and let it be calculated with the search pattern
         lookForYCoordinates(plotStack, index, gardenPlot);
         lookForXCoordinates(plotStack, index, gardenPlot);
 
@@ -69,6 +68,10 @@ public class GardenPlotGrouper {
                     nextPlot.setAlreadyInGroup();
                     plotStack.push(nextPlot);
                 }
+                if (nextPlot.getPlotSymbol() == gardenPlot.getPlotSymbol()
+                        && nextPlot.isAlreadyInGroup()) {
+                    gardenPlot.calculateSides(-1);
+                }
             }
         }
     }
@@ -82,6 +85,10 @@ public class GardenPlotGrouper {
                     nextPlot.setAlreadyInGroup();
                     plotStack.push(nextPlot);
                 }
+                if (nextPlot.getPlotSymbol() == gardenPlot.getPlotSymbol()
+                        && nextPlot.isAlreadyInGroup()) {
+                    gardenPlot.calculateSides(-1);
+                }
             }
         }
     }
@@ -94,8 +101,11 @@ public class GardenPlotGrouper {
         return yIndex >= boundsY[0] && yIndex < boundsY[1];
     }
 
+    public List<GardenPlot[]> getGroupedGardenPlots() {
+        return groupedGardenPlots;
+    }
+
     public static void main(String[] args) throws IOException {
         GardenPlotGrouper testGrouper = new GardenPlotGrouper();
-
     }
 }
