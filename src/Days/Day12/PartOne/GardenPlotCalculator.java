@@ -4,8 +4,8 @@ import java.io.IOException;
 
 public class GardenPlotCalculator {
 
-    private GardenPlotGrouper groupedGardenPlots;
-    private int sum;
+    private final GardenPlotGrouper groupedGardenPlots;
+    private final int sum;
 
     public GardenPlotCalculator() throws IOException {
         groupedGardenPlots = new GardenPlotGrouper();
@@ -23,6 +23,10 @@ public class GardenPlotCalculator {
             }
             sum += area * perimeter;
         }
+        return sum;
+    }
+
+    public int getSum(){
         return sum;
     }
 
