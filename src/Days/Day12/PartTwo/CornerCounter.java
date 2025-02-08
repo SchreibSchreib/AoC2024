@@ -39,9 +39,8 @@ public class CornerCounter {
     private int cornersOfCurrentPlot(GardenPlot plot) {
         int cornersFound = 0;
         int[][] diagonalCoordinates = getDiagonalCoordinates(plot.getCoordinates());
-        List<int[]> potentialCornerCoordinates = findPotentialCornerCoordinates(diagonalCoordinates);
 
-        for (int[] potentialCornerCoordinate : potentialCornerCoordinates) {
+        for (int[] potentialCornerCoordinate : diagonalCoordinates) {
             cornersFound += validateCorner(potentialCornerCoordinate,
                     potentialCornerCoordinate[0] - plot.getCoordinates()[0],
                     potentialCornerCoordinate[1] - plot.getCoordinates()[1]);
@@ -51,84 +50,51 @@ public class CornerCounter {
     }
 
     private int validateCorner(int[] potentialCornerCoordinate, int yDirection, int xDirection) {
-        if (yDirection == -1 && xDirection == -1) {
-            return handleTopLeft(potentialCornerCoordinate);
+        GardenPlot diagonalPlot = tryToGetDiagonalPlot(potentialCornerCoordinate);
+        String cornerToCheck = evaluateCornerPosition(yDirection, xDirection);
+
+        if (diagonalPlot == null) {
+            return checkForValidCorner(potentialCornerCoordinate, cornerToCheck);
         }
-        if (yDirection == -1 && xDirection == 1) {
-            return handleTopRight(potentialCornerCoordinate);
-        }
-        if (yDirection == 1 && xDirection == -1) {
-            return handleBottomLeft(potentialCornerCoordinate);
-        } else {
-            return handleBottomRight(potentialCornerCoordinate);
-        }
+        return checkForValidCorner(diagonalPlot, cornerToCheck);
     }
 
-    private int handleBottomRight(int[] potentialCornerCoordinate) {
-        if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0] - 1)
-                && checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0] - 1), potentialCornerCoordinate[1])) {
-            if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
-                    && checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), potentialCornerCoordinate[1] - 1)) {
-                return 1;
+    private String evaluateCornerPosition(int yDirection, int xDirection) {
+        if (yDirection == -1) {
+            if (xDirection == -1) {
+                return "TopLeft";
             }
-        } else {
-            if (!groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
-                    || !checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), potentialCornerCoordinate[1] - 1)) {
-                return 1;
-            }
+            return "TopRight";
+        }
+        if (xDirection == -1) {
+            return "BottomLeft";
+        }
+        return "BottomRight";
+    }
+
+    private int checkForValidCorner(int[] potentialCornerCoordinate, String cornerToCheck) {
+        int[] neighbourPositions = getNeighbourPositions(cornerToCheck);
+        if (isValidCorner(potentialCornerCoordinate, neighbourPositions)) {
+            return 1;
         }
         return 0;
     }
 
-    private int handleBottomLeft(int[] potentialCornerCoordinate) {
-        if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0] - 1)
-                && checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0] - 1), potentialCornerCoordinate[1])) {
-            if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
-                    && checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), potentialCornerCoordinate[1] + 1)) {
-                return 1;
-            }
+    private boolean isValidCorner(int[] potentialCornerCoordinate, int[] neighbourPositions) {
+        int yToCheck = potentialCornerCoordinate[0] + neighbourPositions[0];
+        int xToCheck = potentialCornerCoordinate[1] + neighbourPositions[1];
+
+        if (groupedGardenPlotsMap.containsKey(yToCheck)
+                && listContainsXCoordinates(groupedGardenPlotsMap.get(yToCheck), potentialCornerCoordinate[1])) {
+            return groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
+                    && listContainsXCoordinates(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), xToCheck);
         } else {
-            if (!groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
-                    || !checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), potentialCornerCoordinate[1] + 1)) {
-                return 1;
-            }
+            return !groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
+                    || !listContainsXCoordinates(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), xToCheck);
         }
-        return 0;
     }
 
-    private int handleTopRight(int[] potentialCornerCoordinate) {
-        if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0] + 1)
-                && checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0] + 1), potentialCornerCoordinate[1])) {
-            if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
-                    && checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), potentialCornerCoordinate[1] - 1)) {
-                return 1;
-            }
-        } else {
-            if (!groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
-                    || !checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), potentialCornerCoordinate[1] - 1)) {
-                return 1;
-            }
-        }
-        return 0;
-    }
-
-    private int handleTopLeft(int[] potentialCornerCoordinate) {
-        if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0] + 1)
-                && checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0] + 1), potentialCornerCoordinate[1])) {
-            if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
-                    && checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), potentialCornerCoordinate[1] + 1)) {
-                return 1;
-            }
-        } else {
-            if (!groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])
-                    || !checkList(groupedGardenPlotsMap.get(potentialCornerCoordinate[0]), potentialCornerCoordinate[1] + 1)) {
-                return 1;
-            }
-        }
-        return 0;
-    }
-
-    private boolean checkList(List<GardenPlot> gardenPlots, int xIndex) {
+    private boolean listContainsXCoordinates(List<GardenPlot> gardenPlots, int xIndex) {
         for (GardenPlot plot : gardenPlots) {
             if (plot.getCoordinates()[1] == xIndex) {
                 return true;
@@ -138,30 +104,53 @@ public class CornerCounter {
     }
 
 
-    private List<int[]> findPotentialCornerCoordinates(int[][] diagonalCoordinates) {
-        List<int[]> potentialCornerCoordinates = new ArrayList<>();
-
-        for (int[] diagonalCoordinate : diagonalCoordinates) {
-            if (doesDiagonalGardenPlotExist(diagonalCoordinate)) {
-                continue;
-            }
-            potentialCornerCoordinates.add(diagonalCoordinate);
+    private int checkForValidCorner(GardenPlot foundPlot, String cornerToCheck) {
+        int[] neighbourPositions = getNeighbourPositions(cornerToCheck);
+        if (isValidCorner(foundPlot, neighbourPositions)) {
+            return 1;
         }
-
-        return potentialCornerCoordinates;
+        return 0;
     }
 
-    private boolean doesDiagonalGardenPlotExist(int[] diagonalCoordinate) {
-        if (!groupedGardenPlotsMap.containsKey(diagonalCoordinate[0])) {
-            return false;
-        }
-        for (GardenPlot plot : groupedGardenPlotsMap.get(diagonalCoordinate[0])) {
-            if (plot.getCoordinates()[1] == diagonalCoordinate[1]) {
+    private boolean isValidCorner(GardenPlot foundPlot, int[] neighbourPositions) {
+        int yToCheck = foundPlot.getCoordinates()[0] + neighbourPositions[0];
+        int xToCheck = foundPlot.getCoordinates()[1] + neighbourPositions[1];
+
+        if (groupedGardenPlotsMap.containsKey(yToCheck)
+                && !listContainsXCoordinates(groupedGardenPlotsMap.get(yToCheck), foundPlot.getCoordinates()[1])) {
+            if (groupedGardenPlotsMap.containsKey(foundPlot.getCoordinates()[0])
+                    && !listContainsXCoordinates(groupedGardenPlotsMap.get(foundPlot.getCoordinates()[0]), xToCheck)) {
                 return true;
             }
         }
         return false;
     }
+
+
+    private int[] getNeighbourPositions(String cornerToCheck) {
+        switch (cornerToCheck) {
+            case "TopLeft":
+                return new int[]{1, 1};
+            case "TopRight":
+                return new int[]{1, -1};
+            case "BottomLeft":
+                return new int[]{-1, 1};
+            default:
+                return new int[]{-1, -1};
+        }
+    }
+
+    private GardenPlot tryToGetDiagonalPlot(int[] potentialCornerCoordinate) {
+        if (groupedGardenPlotsMap.containsKey(potentialCornerCoordinate[0])) {
+            for (GardenPlot plot : groupedGardenPlotsMap.get(potentialCornerCoordinate[0])) {
+                if (plot.getCoordinates()[1] == potentialCornerCoordinate[1]) {
+                    return plot;
+                }
+            }
+        }
+        return null;
+    }
+
 
     private int[][] getDiagonalCoordinates(int[] coordinates) {
         int[][] diagonalCoordinates = new int[4][2];

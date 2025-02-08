@@ -33,14 +33,6 @@ public class GardenPlotCalculator {
 
     public static void main(String[] args) throws IOException {
         GardenPlotCalculator calculator = new GardenPlotCalculator();
-        //907046 to low
-        //Error seems to occur, when there are two corners Parallel in one shape
-        //Example:
-        //AAAA
-        //ABAA
-        //AABA
-        //AAAA
-        // B = Fine bc of own Array
-        // A = Corner Algorithm doesnt work bc its only one shape
+        //914966
     }
 }
