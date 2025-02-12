@@ -41,6 +41,14 @@ public class PrizeFilter {
         return targetValue % new GreatestCommonDivisorCalculator(biggerValue, smallerValue).getGreatestCommonDivisor() == 0;
     }
 
+    public List<List<Integer[]>> getWinnablePrizes() {
+        return winnablePrizes;
+    }
+
+    public List<List<Integer[]>> getUnWinnablePrizes() {
+        return unWinnablePrizes;
+    }
+
     public static void main(String[] args) throws IOException {
         PrizeFilter filter = new PrizeFilter();
 
