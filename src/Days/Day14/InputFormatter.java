@@ -1,5 +1,6 @@
 package Days.Day14;
 
+import Days.Day14.PartOne.Robot;
 import Interfaces.InputManipulatable;
 
 import java.io.IOException;
@@ -10,10 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InputFormatter implements InputManipulatable<Map<Integer, List<Integer[]>>> {
+public class InputFormatter implements InputManipulatable<List<Robot>> {
 
     private final List<String> input;
-    private final Map<Integer, List<Integer[]>> formattedInput;
+    private final List<Robot> formattedInput;
     private int size;
 
     public InputFormatter() throws IOException {
@@ -21,35 +22,27 @@ public class InputFormatter implements InputManipulatable<Map<Integer, List<Inte
         formattedInput = handleInput();
     }
 
-    private Map<Integer, List<Integer[]>> handleInput() {
-        Map<Integer, List<Integer[]>> mappedInput = new HashMap<>();
+    private List<Robot> handleInput() {
+        List<Robot> listedInput = new ArrayList<>();
         for (int index = 0; index < input.size(); index++) {
-
-            mappedInput.putIfAbsent(index / 3, new ArrayList<>());
-            mappedInput.get(index / 3).add(splitInput(input.get(index)));
+            listedInput.add(splitInput(input.get(index)));
         }
-        return mappedInput;
+        return listedInput;
     }
 
-    private Integer[] splitInput(String inputLine) {
-        Integer[] splittedAndConvertedInput = new Integer[2];
+    private Robot splitInput(String inputLine) {
+        String position = inputLine.substring(2, inputLine.indexOf(' '));
+        String velocity = inputLine.substring(inputLine.indexOf(' ') + 3);
+        int positionY = Integer.parseInt(position.split(",")[1]);
+        int positionX = Integer.parseInt(position.split(",")[0]);
+        int velocityY = Integer.parseInt(velocity.split(",")[1]);
+        int velocityX = Integer.parseInt(velocity.split(",")[0]);
 
-        if (inputLine.contains("Button")) {
-            String[] splittedInput = inputLine.split("\\+");
-            splittedAndConvertedInput[0] = Integer.parseInt(splittedInput[1].substring(0, splittedInput[1].indexOf(',')));
-            splittedAndConvertedInput[1] = Integer.parseInt(splittedInput[2]);
-        } else {
-            String[] splittedInput = inputLine.split("=");
-            splittedAndConvertedInput[0] = Integer.parseInt(splittedInput[1].substring(0, splittedInput[1].indexOf(',')));
-            splittedAndConvertedInput[1] = Integer.parseInt(splittedInput[2]);
-        }
-
-
-        return splittedAndConvertedInput;
+        return new Robot(positionY, positionX, velocityY, velocityX);
     }
 
     private List<String> readFile() throws IOException {
-        List<String> data = Files.readAllLines(Paths.get("src/Days/Day13/Input.txt"));
+        List<String> data = Files.readAllLines(Paths.get("src/Days/Day14/Input.txt"));
         List<String> filteredData = new ArrayList<>();
         for (String line : data) {
             if (line.length() == 0) {
@@ -66,7 +59,7 @@ public class InputFormatter implements InputManipulatable<Map<Integer, List<Inte
     }
 
     @Override
-    public Map<Integer, List<Integer[]>> getConvertedInput() {
+    public List<Robot> getConvertedInput() {
         return formattedInput;
     }
 
@@ -78,15 +71,7 @@ public class InputFormatter implements InputManipulatable<Map<Integer, List<Inte
     public static void main(String[] args) {
         try {
             InputFormatter inputConverter = new InputFormatter();
-            for (Map.Entry<Integer, List<Integer[]>> entry : inputConverter.getConvertedInput().entrySet()) {
-                System.out.println(entry.getKey());
-                for (Integer[] line : entry.getValue()) {
-                    for (Integer integer : line) {
-                        System.out.print(integer + " ");
-                    }
-                    System.out.println();
-                }
-            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
