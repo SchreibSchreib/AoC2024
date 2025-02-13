@@ -1,4 +1,4 @@
-package Days.Day13.PartOne;
+package Days.Day13.PartTwo;
 
 public class GreatestCommonDivisorCalculator {
 

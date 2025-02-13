@@ -1,4 +1,4 @@
-package Days.Day13.PartOne;
+package Days.Day13.PartTwo;
 
 import Days.Day13.InputFormatter;
 import Interfaces.InputManipulatable;
@@ -37,7 +37,7 @@ public class PrizeFilter {
     private boolean isGreatestCommonDivisorDividableToTarget(int[] values, int targetValue) {
         int biggerValue = Math.max(values[0], values[1]);
         int smallerValue = Math.min(values[0], values[1]);
-        return targetValue % new GreatestCommonDivisorCalculator(biggerValue, smallerValue).getGreatestCommonDivisor() == 0;
+        return (10000000000000L + targetValue) % new GreatestCommonDivisorCalculator(biggerValue, smallerValue).getGreatestCommonDivisor() == 0;
     }
 
     public List<List<Integer[]>> getWinnablePrizes() {

@@ -9,11 +9,14 @@ public class ClawMachineSolver {
         int determinant = calculateDeterminantOfMatrix(buttonA.getIncrementX(), buttonB.getIncrementY(), buttonA.getIncrementY(), buttonB.getIncrementX());
         int determinantA = calculateDeterminantOfMatrix(resultX, buttonB.getIncrementY(), resultY, buttonB.getIncrementX());
         int determinantB = calculateDeterminantOfMatrix(buttonA.getIncrementX(), resultY, resultX, buttonA.getIncrementY());
-        resultAPresses = calulateResult(determinantA, determinant);
-        resultBPresses = calulateResult(determinantB, determinant);
+        resultAPresses = calculateResult(determinantA, determinant);
+        resultBPresses = calculateResult(determinantB, determinant);
     }
 
-    private int calulateResult(int determinantButton, int determinant) {
+    private int calculateResult(int determinantButton, int determinant) {
+        if (determinantButton % determinant != 0) {
+            return 0;
+        }
         return determinantButton / determinant;
     }
 
@@ -30,7 +33,7 @@ public class ClawMachineSolver {
     }
 
     public static void main(String[] args) {
-        ClawMachineSolver testMachine = new ClawMachineSolver(new Button(94,34),new Button(22,67),8400,5400);
+        ClawMachineSolver testMachine = new ClawMachineSolver(new Button(26,66),new Button(67,21),12748,12176);
 
     }
 }
