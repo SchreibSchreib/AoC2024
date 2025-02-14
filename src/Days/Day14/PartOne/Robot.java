@@ -6,6 +6,7 @@ public class Robot {
     private int positionX;
     private final int velocityY;
     private final int velocityX;
+    private boolean hasFourNeighbours = false;
 
     public Robot(int positionY, int positionX, int velocityY, int velocityX) {
         this.positionY = positionY;
@@ -34,5 +35,13 @@ public class Robot {
 
     public int getPositionX() {
         return positionX;
+    }
+
+    public boolean hasFourNeighbours() {
+        return hasFourNeighbours;
+    }
+
+    public void setHasFourNeighbours(boolean hasFourNeighbours) {
+        this.hasFourNeighbours = hasFourNeighbours;
     }
 }
