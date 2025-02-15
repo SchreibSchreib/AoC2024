@@ -2,11 +2,11 @@ package Days.Day14.PartOne;
 
 public class Robot {
 
+    private static int numberOfRobotsWithFourNeighbours = 0;
     private int positionY;
     private int positionX;
     private final int velocityY;
     private final int velocityX;
-    private boolean hasFourNeighbours = false;
 
     public Robot(int positionY, int positionX, int velocityY, int velocityX) {
         this.positionY = positionY;
@@ -37,11 +37,15 @@ public class Robot {
         return positionX;
     }
 
-    public boolean hasFourNeighbours() {
-        return hasFourNeighbours;
+    public static void incrementNumberOfRobotsWithFourNeighbours() {
+        numberOfRobotsWithFourNeighbours++;
     }
 
-    public void setHasFourNeighbours(boolean hasFourNeighbours) {
-        this.hasFourNeighbours = hasFourNeighbours;
+    public static void resetNumberOfRobotsWithFourNeighbours() {
+        numberOfRobotsWithFourNeighbours = 0;
+    }
+
+    public static int getNumberOfRobotsWithFourNeighbours() {
+        return numberOfRobotsWithFourNeighbours;
     }
 }
