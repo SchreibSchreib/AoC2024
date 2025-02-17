@@ -4,5 +4,5 @@ public enum tileState {
     FREE,
     MOVEABLE,
     BLOCKING,
-    PLAYER
+    Robot
 }

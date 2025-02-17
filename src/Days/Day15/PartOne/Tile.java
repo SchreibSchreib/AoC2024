@@ -17,7 +17,7 @@ public class Tile {
             case '#' -> tileState.BLOCKING;
             case '.' -> tileState.FREE;
             case 'O' -> tileState.MOVEABLE;
-            default -> tileState.PLAYER;
+            default -> tileState.Robot;
         };
     }
 
