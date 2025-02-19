@@ -54,10 +54,40 @@ public class RobotMover {
     }
 
     private void executeMove(int[] stepDirection, List<Tile> affectedTilesInCurrentMoveList) {
+        int[] initialStartingPosition = affectedTilesInCurrentMoveList.getFirst().getCoordinates();
+
         for (Tile affectedTile : affectedTilesInCurrentMoveList) {
-            int nextYCoorinates = affectedTile.getCoordinates()[0] + stepDirection[0];
-            affectedTile.setCoordinates();
-            //Logik zur berechnung der neuen Koordinaten und Umstrukturierung der TileMap
+            if (affectedTile.getState() == tileState.FREE) {
+                affectedTile.setCoordinates(initialStartingPosition);
+                adjustMap(affectedTile);
+            } else {
+                int nextYCoordinates = affectedTile.getCoordinates()[0] + stepDirection[0];
+                int nextXCoordinates = affectedTile.getCoordinates()[1] + stepDirection[1];
+                affectedTile.setCoordinates(new int[]{nextYCoordinates, nextXCoordinates});
+                adjustMap(affectedTile);
+            }
+        }
+    }
+
+    private void adjustMap(Tile affectedTile) {
+        if (affectedTile.getState() == tileState.ROBOT) {
+            startingPosition = affectedTile.getCoordinates();
+        }
+        warehouseMap.get(affectedTile.getCoordinates()[0]).set(affectedTile.getCoordinates()[1], affectedTile);
+    }
+
+    public Map<Integer, List<Tile>> getEvaluatedWarehouseMap() {
+        return warehouseMap;
+    }
+
+    public static void main(String[] args) throws IOException {
+        RobotMover testMover = new RobotMover();
+
+        for (Map.Entry<Integer, List<Tile>> entry : testMover.warehouseMap.entrySet()) {
+            for (Tile affectedTile : entry.getValue()) {
+                System.out.print(affectedTile.getTileSymbol());
+            }
+            System.out.println();
         }
     }
 }

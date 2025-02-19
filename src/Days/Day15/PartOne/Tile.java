@@ -5,10 +5,12 @@ import Days.Day15.PartOne.Enums.tileState;
 public class Tile {
 
     private int[] coordinates;
+    private char tileSymbol;
     private tileState state;
 
     public Tile(int[] coordinates, char tileSymbol) {
         this.coordinates = coordinates;
+        this.tileSymbol = tileSymbol;
         state = evaluateState(tileSymbol);
     }
 
@@ -17,7 +19,7 @@ public class Tile {
             case '#' -> tileState.BLOCKING;
             case '.' -> tileState.FREE;
             case 'O' -> tileState.MOVEABLE;
-            default -> tileState.Robot;
+            default -> tileState.ROBOT;
         };
     }
 
@@ -31,5 +33,9 @@ public class Tile {
 
     public tileState getState() {
         return state;
+    }
+
+    public char getTileSymbol() {
+        return tileSymbol;
     }
 }
