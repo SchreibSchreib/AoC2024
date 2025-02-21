@@ -18,7 +18,7 @@ public class RobotMover {
         WareHouseAndMovementMapper warehouseInformation = new WareHouseAndMovementMapper();
         warehouseMap = warehouseInformation.getTileMap();
         moveSet = warehouseInformation.getMovementList();
-        startingPosition = warehouseInformation.getIndexOfStartingposition();
+        startingPosition = warehouseInformation.getIndexOfStartingPosition();
         evaluateRobotMovement();
     }
 
@@ -30,7 +30,11 @@ public class RobotMover {
                 Tile nextTile = warehouseMap.get(startingPosition[0] + stepDirection[0]).get(startingPosition[1] + stepDirection[1]);
                 List<Tile> affectedTilesInCurrentMoveList = new ArrayList<>(Collections.singletonList(robotTile));
 
-                executeMoveFactory(stepDirection, nextTile, affectedTilesInCurrentMoveList);
+                if (isRobotMovingUpOrDown(stepDirection[0])) {
+                    executeMoveYDirection(stepDirection, nextTile, affectedTilesInCurrentMoveList);
+                } else {
+                    executeMoveFactoryXDirection(stepDirection, nextTile, affectedTilesInCurrentMoveList);
+                }
             }
         }
     }
@@ -44,7 +48,12 @@ public class RobotMover {
         };
     }
 
-    private void executeMoveFactory(int[] stepDirection, Tile nextTile, List<Tile> affectedTilesInCurrentMoveList) {
+    private void executeMoveYDirection(int[] stepDirection, Tile nextTile, List<Tile> affectedTilesInCurrentMoveList) {
+    }
+
+
+
+    private void executeMoveFactoryXDirection(int[] stepDirection, Tile nextTile, List<Tile> affectedTilesInCurrentMoveList) {
         affectedTilesInCurrentMoveList.add(nextTile);
 
         if (nextTile.getState() == tileState.FREE) {
@@ -52,8 +61,23 @@ public class RobotMover {
         }
         if (nextTile.getState() == tileState.MOVEABLE) {
             nextTile = warehouseMap.get(nextTile.getCoordinates()[0] + stepDirection[0]).get(nextTile.getCoordinates()[1] + stepDirection[1]);
-            executeMoveFactory(stepDirection, nextTile, affectedTilesInCurrentMoveList);
+            executeMoveFactoryXDirection(stepDirection, nextTile, affectedTilesInCurrentMoveList);
         }
+    }
+
+    private Tile getOtherBoxPiece(Tile nextTile) {
+        if (nextTile.getTileSymbol() == ']') {
+            return warehouseMap.get(nextTile.getCoordinates()[0]).get(nextTile.getCoordinates()[1] - 1);
+        }
+        return warehouseMap.get(nextTile.getCoordinates()[0]).get(nextTile.getCoordinates()[1] + 1);
+    }
+
+    private boolean isNextTileABox(Tile nextTile) {
+        return nextTile.getState() == tileState.MOVEABLE;
+    }
+
+    private boolean isRobotMovingUpOrDown(int yDirection) {
+        return yDirection != 0;
     }
 
     private void executeMove(int[] stepDirection, List<Tile> affectedTilesInCurrentMoveList) {

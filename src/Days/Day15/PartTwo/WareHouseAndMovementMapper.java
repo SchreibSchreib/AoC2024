@@ -14,7 +14,7 @@ public class WareHouseAndMovementMapper {
     private final Map<Integer, List<Tile>> tileMap;
     private final List<char[]> listOfMovements;
     private int indexOfEmptyEntry;
-    private int[] indexOfStartingposition;
+    private int[] indexOfStartingPosition;
 
     public WareHouseAndMovementMapper() throws IOException {
         input = new InputFormatter().getConvertedInput();
@@ -40,7 +40,7 @@ public class WareHouseAndMovementMapper {
             for (int xIndex = 0; xIndex < input.getFirst().length; xIndex++) {
                 char tileSymbol = input.get(yIndex)[xIndex];
                 if (tileSymbol == '@') {
-                    indexOfStartingposition = new int[]{yIndex, xIndex};
+                    indexOfStartingPosition = new int[]{yIndex, xIndex};
                 }
                 Tile[] convertedTiles = convertToBiggerTile(tileSymbol, yIndex, xIndex, iterationMultiplier);
                 mappedTiles.get(yIndex).add(convertedTiles[0]);
@@ -51,14 +51,14 @@ public class WareHouseAndMovementMapper {
     }
 
     private Tile[] convertToBiggerTile(char tileSymbol, int yIndex, int xIndex, int iterationMultiplier) {
-        int[] xIndizes = {xIndex * iterationMultiplier, xIndex * iterationMultiplier + 1};
+        int[] xIndices = {xIndex * iterationMultiplier, xIndex * iterationMultiplier + 1};
         return switch (tileSymbol) {
             case '#' ->
-                    new Tile[]{new Tile(new int[]{yIndex, xIndizes[0]}, tileSymbol), new Tile(new int[]{yIndex, xIndizes[1]}, '#')};
+                    new Tile[]{new Tile(new int[]{yIndex, xIndices[0]}, tileSymbol), new Tile(new int[]{yIndex, xIndices[1]}, '#')};
             case 'O' ->
-                    new Tile[]{new Tile(new int[]{yIndex, xIndizes[0]}, '['), new Tile(new int[]{yIndex, xIndizes[1]}, ']')};
+                    new Tile[]{new Tile(new int[]{yIndex, xIndices[0]}, '['), new Tile(new int[]{yIndex, xIndices[1]}, ']')};
             default ->
-                    new Tile[]{new Tile(new int[]{yIndex, xIndizes[0]}, tileSymbol), new Tile(new int[]{yIndex, xIndizes[1]}, '.')};
+                    new Tile[]{new Tile(new int[]{yIndex, xIndices[0]}, tileSymbol), new Tile(new int[]{yIndex, xIndices[1]}, '.')};
 
         };
     }
@@ -72,8 +72,8 @@ public class WareHouseAndMovementMapper {
         return listOfMovements;
     }
 
-    public int[] getIndexOfStartingposition() {
-        return indexOfStartingposition;
+    public int[] getIndexOfStartingPosition() {
+        return indexOfStartingPosition;
     }
 
     public static void main(String[] args) throws IOException {
