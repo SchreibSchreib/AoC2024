@@ -49,6 +49,7 @@ public class RobotMover {
     }
 
     private void executeMoveYDirection(int[] stepDirection, Tile nextTile, List<Tile> affectedTilesInCurrentMoveList) {
+        //Check just every straight line towards the end of every box line....if there is an obstacle---->no move
     }
 
 
